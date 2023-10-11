@@ -141,44 +141,91 @@ Public Class frmCargaDatos
     End Sub
 
     Private Sub txtBxNombres_TextChanged(sender As Object, e As EventArgs) Handles txtBxNombres.TextChanged
+        ' Ruta de la base de datos de Access
         Dim con As String = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
 
+        ' Verificar si el cuadro de texto está vacío
         If txtBxNombres.Text = "" Then
+            ' Ocultamos el ListView
             lstVwEstu.Visible = False
         Else
             Try
+                ' Abrir la conexión a la base de datos utilizando la instrucción Using
                 Using connDB As New OleDbConnection(con)
                     connDB.Open()
-
+                    ' Consulta SQL para seleccionar solo el campo nomb_estu que comienza con el texto ingresado
                     Dim cmd As String = "SELECT nomb_estu FROM Estudiantes WHERE nomb_estu LIKE @NombreEstudiante"
+                    ' Crear un adaptador de datos para ejecutar la consulta
                     Using oDataAdapter As New OleDbDataAdapter(cmd, connDB)
+                        ' Asignar el valor del parámetro @NombreEstudiante
                         oDataAdapter.SelectCommand.Parameters.AddWithValue("@NombreEstudiante", txtBxNombres.Text & "%")
-
+                        ' Crear un DataSet para almacenar los resultados de la consulta
                         Dim oDataSet As New DataSet()
+                        ' Llenar el DataSet con los resultados de la consulta
                         oDataAdapter.Fill(oDataSet, "Estudiantes")
 
+                        ' Verificar si se obtuvieron resultados
                         If oDataSet.Tables("Estudiantes").Rows.Count() <> 0 Then
+                            ' Mostrar el ListView
                             lstVwEstu.Visible = True
+                            ' Limpiar los elementos anteriores del ListView
                             lstVwEstu.Items.Clear()
 
+                            ' Agregar cada resultado al ListView
                             For Each fila As DataRow In oDataSet.Tables("Estudiantes").Rows
                                 lstVwEstu.Items.Add(fila("nomb_estu"))
                             Next
                         Else
+                            ' Ocultar el ListView si no hay resultados
                             lstVwEstu.Visible = False
                         End If
                     End Using
                 End Using
             Catch ea As Exception
+                ' Mostrar mensaje de error si ocurre una excepción
                 MsgBox(ea.Message)
             End Try
         End If
     End Sub
 
     Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
-        txtBxDni.Enabled = True
-        txtBxNombres.Enabled = True
-        btnNuevo.Text = "Cancelar"
+        ' Cargamos el contenido del TextBox para realizar la búsqueda por número de documento
+        Dim dni As String = txtBxDni.Text
+        Try
+            Dim con As String = "Provider=Microsoft.ACE.OLEDB.16.0; Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
+
+            Using connDB As New OleDbConnection(con)
+                connDB.Open()
+
+                ' Consulta SQL para obtener los datos del estudiante por su DNI
+                Dim sqlQuery As String = "SELECT nomb_estu, apell_estu, fecha_nac_estu, nro_tel_estu, email_estu, calle_estu, altura_calle_estu
+                                        FROM Estudiantes WHERE dni_estu = @Dni"
+
+                Using command As New OleDbCommand(sqlQuery, connDB)
+                    command.Parameters.AddWithValue("@Dni", dni)
+
+                    Using reader As OleDbDataReader = command.ExecuteReader()
+                        If reader.Read() Then
+                            ' Asignar los valores a los TextBox correspondientes
+                            txtBxNombres.Text = reader("nomb_estu").ToString()
+                            txtBxApellido.Text = reader("apell_estu").ToString()
+                            ' Usamos ToShortDateString para obtener solo la fecha en formato de cadena corta
+                            txtBxFechaNacimiento.Text = reader("fecha_nac_estu").ToShortDateString()
+                            txtBxTelefono.Text = reader("nro_tel_estu").ToString()
+                            txtBxCorreo.Text = reader("email_estu").ToString()
+                            txtBxCalle.Text = reader("calle_estu").ToString()
+                            txtBxAltura.Text = reader("altura_calle_estu").ToString()
+                        Else
+                            MsgBox("No se encontraron datos para el DNI proporcionado.")
+                        End If
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            MsgBox("Error al obtener datos del estudiante: " & ex.Message)
+        End Try
+
+
     End Sub
 End Class
 

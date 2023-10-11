@@ -53,7 +53,7 @@ Partial Class frmCargaDatos
         ' 
         lblNombres.AutoSize = True
         lblNombres.BackColor = Color.Transparent
-        lblNombres.Location = New Point(32, 149)
+        lblNombres.Location = New Point(33, 176)
         lblNombres.Name = "lblNombres"
         lblNombres.Size = New Size(64, 20)
         lblNombres.TabIndex = 0
@@ -63,7 +63,7 @@ Partial Class frmCargaDatos
         ' 
         lblApellido.AutoSize = True
         lblApellido.BackColor = Color.Transparent
-        lblApellido.Location = New Point(32, 189)
+        lblApellido.Location = New Point(33, 216)
         lblApellido.Name = "lblApellido"
         lblApellido.Size = New Size(66, 20)
         lblApellido.TabIndex = 1
@@ -73,7 +73,7 @@ Partial Class frmCargaDatos
         ' 
         lblDni.AutoSize = True
         lblDni.BackColor = Color.Transparent
-        lblDni.Location = New Point(32, 288)
+        lblDni.Location = New Point(33, 315)
         lblDni.Name = "lblDni"
         lblDni.Size = New Size(166, 20)
         lblDni.TabIndex = 3
@@ -83,7 +83,7 @@ Partial Class frmCargaDatos
         ' 
         lblFechaNac.AutoSize = True
         lblFechaNac.BackColor = Color.Transparent
-        lblFechaNac.Location = New Point(32, 237)
+        lblFechaNac.Location = New Point(33, 264)
         lblFechaNac.Name = "lblFechaNac"
         lblFechaNac.Size = New Size(149, 20)
         lblFechaNac.TabIndex = 2
@@ -93,7 +93,7 @@ Partial Class frmCargaDatos
         ' 
         lblCorreo.AutoSize = True
         lblCorreo.BackColor = Color.Transparent
-        lblCorreo.Location = New Point(30, 513)
+        lblCorreo.Location = New Point(31, 540)
         lblCorreo.Name = "lblCorreo"
         lblCorreo.Size = New Size(52, 20)
         lblCorreo.TabIndex = 7
@@ -103,7 +103,7 @@ Partial Class frmCargaDatos
         ' 
         lblTelefono.AutoSize = True
         lblTelefono.BackColor = Color.Transparent
-        lblTelefono.Location = New Point(30, 465)
+        lblTelefono.Location = New Point(31, 492)
         lblTelefono.Name = "lblTelefono"
         lblTelefono.Size = New Size(146, 20)
         lblTelefono.TabIndex = 6
@@ -113,7 +113,7 @@ Partial Class frmCargaDatos
         ' 
         lblAltura.AutoSize = True
         lblAltura.BackColor = Color.Transparent
-        lblAltura.Location = New Point(35, 406)
+        lblAltura.Location = New Point(36, 433)
         lblAltura.Name = "lblAltura"
         lblAltura.Size = New Size(49, 20)
         lblAltura.TabIndex = 5
@@ -123,7 +123,7 @@ Partial Class frmCargaDatos
         ' 
         lblCalle.AutoSize = True
         lblCalle.BackColor = Color.Transparent
-        lblCalle.Location = New Point(32, 353)
+        lblCalle.Location = New Point(33, 380)
         lblCalle.Name = "lblCalle"
         lblCalle.Size = New Size(42, 20)
         lblCalle.TabIndex = 4
@@ -131,8 +131,7 @@ Partial Class frmCargaDatos
         ' 
         ' txtBxNombres
         ' 
-        txtBxNombres.Enabled = False
-        txtBxNombres.Location = New Point(114, 146)
+        txtBxNombres.Location = New Point(115, 173)
         txtBxNombres.Name = "txtBxNombres"
         txtBxNombres.Size = New Size(215, 27)
         txtBxNombres.TabIndex = 8
@@ -140,15 +139,14 @@ Partial Class frmCargaDatos
         ' txtBxApellido
         ' 
         txtBxApellido.Enabled = False
-        txtBxApellido.Location = New Point(114, 186)
+        txtBxApellido.Location = New Point(115, 213)
         txtBxApellido.Name = "txtBxApellido"
         txtBxApellido.Size = New Size(215, 27)
         txtBxApellido.TabIndex = 9
         ' 
         ' txtBxDni
         ' 
-        txtBxDni.Enabled = False
-        txtBxDni.Location = New Point(204, 288)
+        txtBxDni.Location = New Point(205, 315)
         txtBxDni.Name = "txtBxDni"
         txtBxDni.Size = New Size(125, 27)
         txtBxDni.TabIndex = 11
@@ -156,7 +154,7 @@ Partial Class frmCargaDatos
         ' txtBxFechaNacimiento
         ' 
         txtBxFechaNacimiento.Enabled = False
-        txtBxFechaNacimiento.Location = New Point(187, 234)
+        txtBxFechaNacimiento.Location = New Point(188, 261)
         txtBxFechaNacimiento.Name = "txtBxFechaNacimiento"
         txtBxFechaNacimiento.Size = New Size(142, 27)
         txtBxFechaNacimiento.TabIndex = 10
@@ -164,7 +162,7 @@ Partial Class frmCargaDatos
         ' txtBxCorreo
         ' 
         txtBxCorreo.Enabled = False
-        txtBxCorreo.Location = New Point(90, 510)
+        txtBxCorreo.Location = New Point(91, 537)
         txtBxCorreo.Name = "txtBxCorreo"
         txtBxCorreo.Size = New Size(237, 27)
         txtBxCorreo.TabIndex = 15
@@ -172,7 +170,7 @@ Partial Class frmCargaDatos
         ' txtBxTelefono
         ' 
         txtBxTelefono.Enabled = False
-        txtBxTelefono.Location = New Point(182, 465)
+        txtBxTelefono.Location = New Point(183, 492)
         txtBxTelefono.Name = "txtBxTelefono"
         txtBxTelefono.Size = New Size(145, 27)
         txtBxTelefono.TabIndex = 14
@@ -180,7 +178,7 @@ Partial Class frmCargaDatos
         ' txtBxAltura
         ' 
         txtBxAltura.Enabled = False
-        txtBxAltura.Location = New Point(90, 406)
+        txtBxAltura.Location = New Point(91, 433)
         txtBxAltura.Name = "txtBxAltura"
         txtBxAltura.Size = New Size(125, 27)
         txtBxAltura.TabIndex = 13
@@ -188,7 +186,7 @@ Partial Class frmCargaDatos
         ' txtBxCalle
         ' 
         txtBxCalle.Enabled = False
-        txtBxCalle.Location = New Point(80, 350)
+        txtBxCalle.Location = New Point(81, 377)
         txtBxCalle.Name = "txtBxCalle"
         txtBxCalle.Size = New Size(249, 27)
         txtBxCalle.TabIndex = 12
@@ -196,7 +194,7 @@ Partial Class frmCargaDatos
         ' btnGuardarDatos
         ' 
         btnGuardarDatos.Enabled = False
-        btnGuardarDatos.Location = New Point(30, 584)
+        btnGuardarDatos.Location = New Point(31, 611)
         btnGuardarDatos.Name = "btnGuardarDatos"
         btnGuardarDatos.Size = New Size(94, 29)
         btnGuardarDatos.TabIndex = 18
@@ -208,7 +206,7 @@ Partial Class frmCargaDatos
         lblCargaEstu.AutoSize = True
         lblCargaEstu.BackColor = Color.Transparent
         lblCargaEstu.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point)
-        lblCargaEstu.Location = New Point(282, 18)
+        lblCargaEstu.Location = New Point(202, 18)
         lblCargaEstu.Name = "lblCargaEstu"
         lblCargaEstu.Size = New Size(293, 41)
         lblCargaEstu.TabIndex = 19
@@ -216,7 +214,7 @@ Partial Class frmCargaDatos
         ' 
         ' btnNuevo
         ' 
-        btnNuevo.Location = New Point(32, 73)
+        btnNuevo.Location = New Point(33, 100)
         btnNuevo.Name = "btnNuevo"
         btnNuevo.Size = New Size(94, 29)
         btnNuevo.TabIndex = 20
@@ -226,7 +224,7 @@ Partial Class frmCargaDatos
         ' btnEditar
         ' 
         btnEditar.Enabled = False
-        btnEditar.Location = New Point(130, 584)
+        btnEditar.Location = New Point(136, 100)
         btnEditar.Name = "btnEditar"
         btnEditar.Size = New Size(94, 29)
         btnEditar.TabIndex = 21
@@ -235,7 +233,7 @@ Partial Class frmCargaDatos
         ' 
         ' btnBuscar
         ' 
-        btnBuscar.Location = New Point(182, 73)
+        btnBuscar.Location = New Point(236, 100)
         btnBuscar.Name = "btnBuscar"
         btnBuscar.Size = New Size(94, 29)
         btnBuscar.TabIndex = 22
@@ -244,7 +242,7 @@ Partial Class frmCargaDatos
         ' 
         ' btnEliminar
         ' 
-        btnEliminar.Location = New Point(230, 584)
+        btnEliminar.Location = New Point(231, 611)
         btnEliminar.Name = "btnEliminar"
         btnEliminar.Size = New Size(94, 29)
         btnEliminar.TabIndex = 23
@@ -255,7 +253,7 @@ Partial Class frmCargaDatos
         ' 
         lstVwEstu.Columns.AddRange(New ColumnHeader() {nomb_estu})
         lstVwEstu.Enabled = False
-        lstVwEstu.Location = New Point(447, 146)
+        lstVwEstu.Location = New Point(448, 173)
         lstVwEstu.Name = "lstVwEstu"
         lstVwEstu.Size = New Size(162, 346)
         lstVwEstu.TabIndex = 24
@@ -273,7 +271,7 @@ Partial Class frmCargaDatos
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
         BackgroundImageLayout = ImageLayout.Stretch
-        ClientSize = New Size(897, 679)
+        ClientSize = New Size(672, 679)
         Controls.Add(lstVwEstu)
         Controls.Add(btnEliminar)
         Controls.Add(btnBuscar)
