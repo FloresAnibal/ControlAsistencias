@@ -14,7 +14,7 @@ Public Class frmAsistenciaEstudiante
         Dim dni As String = frmAcceso.txtBxUsuario.Text
 
         ' Consulta SQL para obtener NOMBRE, FECHA y ESTADO para el estudiante con el DNI especificado
-        Dim query As String = "SELECT Estudiantes.nomb_estu, Asistencias.fecha_asis, Asistencias.estado_asis
+        Dim query As String = "SELECT Estudiantes.nomb_est|u, Asistencias.fecha_asis, Asistencias.estado_asis
                                FROM Estudiantes INNER JOIN Asistencias ON Estudiantes.id_estu = Asistencias.id_estu
                                WHERE Estudiantes.dni_estu = @DNI;"
 
@@ -44,6 +44,12 @@ Public Class frmAsistenciaEstudiante
 
                     ' Convertir el estado booleano a una cadena "Presente" o "Ausente"
                     Dim estadoString As String = If(estado, "Presente", "Ausente")
+
+                    'If estado = True Then
+                    '    estadoString = "presente"
+                    'Else
+                    '    estadoString = "ausente"
+                    'End If
 
                     Dim item As New ListViewItem({fecha, estadoString})
 

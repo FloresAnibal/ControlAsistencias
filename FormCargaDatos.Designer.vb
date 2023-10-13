@@ -34,7 +34,7 @@ Partial Class frmCargaDatos
         txtBxNombres = New TextBox()
         txtBxApellido = New TextBox()
         txtBxDni = New TextBox()
-        txtBxFechaNacimiento = New TextBox()
+        txtBxFechaNac = New TextBox()
         txtBxCorreo = New TextBox()
         txtBxTelefono = New TextBox()
         txtBxAltura = New TextBox()
@@ -151,13 +151,13 @@ Partial Class frmCargaDatos
         txtBxDni.Size = New Size(125, 27)
         txtBxDni.TabIndex = 11
         ' 
-        ' txtBxFechaNacimiento
+        ' txtBxFechaNac
         ' 
-        txtBxFechaNacimiento.Enabled = False
-        txtBxFechaNacimiento.Location = New Point(188, 261)
-        txtBxFechaNacimiento.Name = "txtBxFechaNacimiento"
-        txtBxFechaNacimiento.Size = New Size(142, 27)
-        txtBxFechaNacimiento.TabIndex = 10
+        txtBxFechaNac.Enabled = False
+        txtBxFechaNac.Location = New Point(188, 261)
+        txtBxFechaNac.Name = "txtBxFechaNac"
+        txtBxFechaNac.Size = New Size(142, 27)
+        txtBxFechaNac.TabIndex = 10
         ' 
         ' txtBxCorreo
         ' 
@@ -242,6 +242,7 @@ Partial Class frmCargaDatos
         ' 
         ' btnEliminar
         ' 
+        btnEliminar.Enabled = False
         btnEliminar.Location = New Point(231, 611)
         btnEliminar.Name = "btnEliminar"
         btnEliminar.Size = New Size(94, 29)
@@ -284,7 +285,7 @@ Partial Class frmCargaDatos
         Controls.Add(txtBxAltura)
         Controls.Add(txtBxCalle)
         Controls.Add(txtBxDni)
-        Controls.Add(txtBxFechaNacimiento)
+        Controls.Add(txtBxFechaNac)
         Controls.Add(txtBxApellido)
         Controls.Add(txtBxNombres)
         Controls.Add(lblCorreo)
@@ -296,6 +297,7 @@ Partial Class frmCargaDatos
         Controls.Add(lblApellido)
         Controls.Add(lblNombres)
         Name = "frmCargaDatos"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Carga de Datos"
         ResumeLayout(False)
         PerformLayout()
@@ -312,7 +314,7 @@ Partial Class frmCargaDatos
     Friend WithEvents txtBxNombres As TextBox
     Friend WithEvents txtBxApellido As TextBox
     Friend WithEvents txtBxDni As TextBox
-    Friend WithEvents txtBxFechaNacimiento As TextBox
+    Friend WithEvents txtBxFechaNac As TextBox
     Friend WithEvents txtBxCorreo As TextBox
     Friend WithEvents txtBxTelefono As TextBox
     Friend WithEvents txtBxAltura As TextBox
