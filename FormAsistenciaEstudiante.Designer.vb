@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmAsistenciaEstudiante
+Partial Class frmAsistenciaEstu
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -22,21 +22,20 @@ Partial Class frmAsistenciaEstudiante
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(frmAsistenciaEstudiante))
+        Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(frmAsistenciaEstu))
         lstVwAsis = New ListView()
         columnaFecha = New ColumnHeader()
         columnaAsis = New ColumnHeader()
-        menuAsis = New MenuStrip()
-        SalirMenuAsis = New ToolStripMenuItem()
-        menuAsis.SuspendLayout()
+        btnSalirEstu = New Button()
         SuspendLayout()
         ' 
         ' lstVwAsis
         ' 
         lstVwAsis.Columns.AddRange(New ColumnHeader() {columnaFecha, columnaAsis})
-        lstVwAsis.Location = New Point(41, 83)
+        lstVwAsis.Font = New Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point)
+        lstVwAsis.Location = New Point(74, 114)
         lstVwAsis.Name = "lstVwAsis"
-        lstVwAsis.Size = New Size(243, 328)
+        lstVwAsis.Size = New Size(257, 328)
         lstVwAsis.TabIndex = 8
         lstVwAsis.UseCompatibleStateImageBehavior = False
         lstVwAsis.View = View.Details
@@ -51,25 +50,24 @@ Partial Class frmAsistenciaEstudiante
         columnaAsis.Text = "Asistencia"
         columnaAsis.Width = 100
         ' 
-        ' menuAsis
+        ' btnSalirEstu
         ' 
-        menuAsis.ImageScalingSize = New Size(20, 20)
-        menuAsis.Items.AddRange(New ToolStripItem() {SalirMenuAsis})
-        menuAsis.Location = New Point(0, 0)
-        menuAsis.Name = "menuAsis"
-        menuAsis.Size = New Size(484, 36)
-        menuAsis.TabIndex = 9
-        menuAsis.Text = "MenuStrip1"
+        btnSalirEstu.Anchor = AnchorStyles.None
+        btnSalirEstu.BackColor = Color.Transparent
+        btnSalirEstu.BackgroundImage = My.Resources.Resources.apagarN_small
+        btnSalirEstu.BackgroundImageLayout = ImageLayout.Zoom
+        btnSalirEstu.FlatAppearance.BorderSize = 0
+        btnSalirEstu.FlatAppearance.MouseDownBackColor = Color.Transparent
+        btnSalirEstu.FlatAppearance.MouseOverBackColor = Color.Transparent
+        btnSalirEstu.FlatStyle = FlatStyle.Flat
+        btnSalirEstu.Font = New Font("Calibri", 12F, FontStyle.Italic, GraphicsUnit.Point)
+        btnSalirEstu.Location = New Point(364, 12)
+        btnSalirEstu.Name = "btnSalirEstu"
+        btnSalirEstu.Size = New Size(30, 30)
+        btnSalirEstu.TabIndex = 9
+        btnSalirEstu.UseVisualStyleBackColor = False
         ' 
-        ' SalirMenuAsis
-        ' 
-        SalirMenuAsis.Alignment = ToolStripItemAlignment.Right
-        SalirMenuAsis.Font = New Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point)
-        SalirMenuAsis.Name = "SalirMenuAsis"
-        SalirMenuAsis.Size = New Size(64, 32)
-        SalirMenuAsis.Text = "Salir"
-        ' 
-        ' frmAsistenciaEstudiante
+        ' frmAsistenciaEstu
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
         AutoScaleMode = AutoScaleMode.Font
@@ -77,21 +75,17 @@ Partial Class frmAsistenciaEstudiante
         AutoValidate = AutoValidate.Disable
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
         BackgroundImageLayout = ImageLayout.Stretch
-        ClientSize = New Size(484, 493)
+        ClientSize = New Size(406, 569)
+        Controls.Add(btnSalirEstu)
         Controls.Add(lstVwAsis)
-        Controls.Add(menuAsis)
-        MainMenuStrip = menuAsis
-        Name = "frmAsistenciaEstudiante"
+        FormBorderStyle = FormBorderStyle.None
+        Name = "frmAsistenciaEstu"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Asistencias"
-        menuAsis.ResumeLayout(False)
-        menuAsis.PerformLayout()
         ResumeLayout(False)
-        PerformLayout()
     End Sub
     Friend WithEvents lstVwAsis As ListView
     Friend WithEvents columnaFecha As ColumnHeader
     Friend WithEvents columnaAsis As ColumnHeader
-    Friend WithEvents menuAsis As MenuStrip
-    Friend WithEvents SalirMenuAsis As ToolStripMenuItem
+    Friend WithEvents btnSalirEstu As Button
 End Class

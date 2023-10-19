@@ -1,6 +1,8 @@
 ﻿Imports System.Data.OleDb
+Imports System.Drawing.Printing
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
-Public Class frmAsistenciaEstudiante
+Public Class frmAsistenciaEstu
 
     ' Cadena de conexión a la base de datos Access
     Private connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source= E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
@@ -14,7 +16,7 @@ Public Class frmAsistenciaEstudiante
         Dim dni As String = frmAcceso.txtBxUsuario.Text
 
         ' Consulta SQL para obtener NOMBRE, FECHA y ESTADO para el estudiante con el DNI especificado
-        Dim query As String = "SELECT Estudiantes.nomb_est|u, Asistencias.fecha_asis, Asistencias.estado_asis
+        Dim query As String = "SELECT Estudiantes.nomb_estu, Asistencias.fecha_asis, Asistencias.estado_asis
                                FROM Estudiantes INNER JOIN Asistencias ON Estudiantes.id_estu = Asistencias.id_estu
                                WHERE Estudiantes.dni_estu = @DNI;"
 
@@ -63,8 +65,22 @@ Public Class frmAsistenciaEstudiante
         End Using
     End Sub
 
-    Private Sub SalirMenuAsis_Click(sender As Object, e As EventArgs) Handles SalirMenuAsis.Click
-        ' Cierra la aplicación, finaliza todos los formularios y termina el proceso de la aplicación.
-        Application.Exit()
+
+    Private Sub btnSalirEstu_Click_1(sender As Object, e As EventArgs) Handles btnSalirEstu.Click
+        modFunciones.SalirAplicacion()
     End Sub
+
+    Private Sub btnSalirEstu_MouseHover(sender As Object, e As EventArgs) Handles btnSalirEstu.MouseHover
+        ' Este evento se desencadena cuando el mouse entra en el área del botón
+        ' Cambia la imagen de fondo del botón cuando el mouse está sobre él
+        btnSalirEstu.BackgroundImage = My.Resources.apagarR_small
+    End Sub
+
+    Private Sub btnSalirAcceso_MouseLeave(sender As Object, e As EventArgs) Handles btnSalirEstu.MouseLeave
+        ' Este evento se desencadena cuando el mouse sale del área del botón
+        ' Restaura la imagen de fondo original del botón cuando el mouse sale de él
+        btnSalirEstu.BackgroundImage = My.Resources.apagarN_small
+    End Sub
+
+
 End Class

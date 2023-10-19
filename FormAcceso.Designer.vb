@@ -30,21 +30,19 @@ Partial Class frmAcceso
         btnAcceder = New Button()
         rdBtnEstu = New RadioButton()
         rdBtnPrece = New RadioButton()
-        menuAcceso = New MenuStrip()
-        SalirMenuAcceso = New ToolStripMenuItem()
-        menuAcceso.SuspendLayout()
+        btnSalirAcceso = New Button()
         SuspendLayout()
         ' 
         ' txtBxUsuario
         ' 
-        txtBxUsuario.Location = New Point(117, 142)
+        txtBxUsuario.Location = New Point(119, 127)
         txtBxUsuario.Name = "txtBxUsuario"
         txtBxUsuario.Size = New Size(173, 27)
         txtBxUsuario.TabIndex = 0
         ' 
         ' txtBxPass
         ' 
-        txtBxPass.Location = New Point(117, 272)
+        txtBxPass.Location = New Point(119, 257)
         txtBxPass.Name = "txtBxPass"
         txtBxPass.PasswordChar = "*"c
         txtBxPass.Size = New Size(173, 27)
@@ -56,7 +54,7 @@ Partial Class frmAcceso
         lblUsuario.BackColor = Color.Transparent
         lblUsuario.Font = New Font("Calibri", 16.2F, FontStyle.Bold, GraphicsUnit.Point)
         lblUsuario.ForeColor = Color.Black
-        lblUsuario.Location = New Point(157, 96)
+        lblUsuario.Location = New Point(159, 81)
         lblUsuario.Name = "lblUsuario"
         lblUsuario.Size = New Size(105, 35)
         lblUsuario.TabIndex = 2
@@ -68,7 +66,7 @@ Partial Class frmAcceso
         lblPassword.BackColor = Color.Transparent
         lblPassword.Font = New Font("Calibri", 16.2F, FontStyle.Bold, GraphicsUnit.Point)
         lblPassword.ForeColor = Color.Black
-        lblPassword.Location = New Point(132, 226)
+        lblPassword.Location = New Point(134, 211)
         lblPassword.Name = "lblPassword"
         lblPassword.Size = New Size(147, 35)
         lblPassword.TabIndex = 3
@@ -77,7 +75,7 @@ Partial Class frmAcceso
         ' btnAcceder
         ' 
         btnAcceder.Font = New Font("Calibri", 16.2F, FontStyle.Bold, GraphicsUnit.Point)
-        btnAcceder.Location = New Point(117, 432)
+        btnAcceder.Location = New Point(120, 429)
         btnAcceder.Name = "btnAcceder"
         btnAcceder.Size = New Size(161, 49)
         btnAcceder.TabIndex = 4
@@ -89,10 +87,10 @@ Partial Class frmAcceso
         rdBtnEstu.AutoSize = True
         rdBtnEstu.BackColor = Color.Transparent
         rdBtnEstu.Checked = True
-        rdBtnEstu.Font = New Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point)
-        rdBtnEstu.Location = New Point(132, 329)
+        rdBtnEstu.Font = New Font("Calibri", 13.8F, FontStyle.Bold, GraphicsUnit.Point)
+        rdBtnEstu.Location = New Point(134, 314)
         rdBtnEstu.Name = "rdBtnEstu"
-        rdBtnEstu.Size = New Size(133, 32)
+        rdBtnEstu.Size = New Size(134, 32)
         rdBtnEstu.TabIndex = 5
         rdBtnEstu.TabStop = True
         rdBtnEstu.Text = "Estudiante"
@@ -103,32 +101,31 @@ Partial Class frmAcceso
         ' 
         rdBtnPrece.AutoSize = True
         rdBtnPrece.BackColor = Color.Transparent
-        rdBtnPrece.Font = New Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point)
-        rdBtnPrece.Location = New Point(132, 373)
+        rdBtnPrece.Font = New Font("Calibri", 13.8F, FontStyle.Bold, GraphicsUnit.Point)
+        rdBtnPrece.Location = New Point(134, 358)
         rdBtnPrece.Name = "rdBtnPrece"
-        rdBtnPrece.Size = New Size(145, 32)
+        rdBtnPrece.Size = New Size(147, 32)
         rdBtnPrece.TabIndex = 7
         rdBtnPrece.Text = "Preceptor/a"
         rdBtnPrece.TextAlign = ContentAlignment.BottomCenter
         rdBtnPrece.UseVisualStyleBackColor = False
         ' 
-        ' menuAcceso
+        ' btnSalirAcceso
         ' 
-        menuAcceso.ImageScalingSize = New Size(20, 20)
-        menuAcceso.Items.AddRange(New ToolStripItem() {SalirMenuAcceso})
-        menuAcceso.Location = New Point(0, 0)
-        menuAcceso.Name = "menuAcceso"
-        menuAcceso.Size = New Size(406, 31)
-        menuAcceso.TabIndex = 8
-        menuAcceso.Text = "MenuStrip1"
-        ' 
-        ' SalirMenuAcceso
-        ' 
-        SalirMenuAcceso.Alignment = ToolStripItemAlignment.Right
-        SalirMenuAcceso.Font = New Font("Segoe UI", 10.2F, FontStyle.Italic, GraphicsUnit.Point)
-        SalirMenuAcceso.Name = "SalirMenuAcceso"
-        SalirMenuAcceso.Size = New Size(55, 27)
-        SalirMenuAcceso.Text = "Salir"
+        btnSalirAcceso.Anchor = AnchorStyles.None
+        btnSalirAcceso.BackColor = Color.Transparent
+        btnSalirAcceso.BackgroundImage = My.Resources.Resources.apagarN_small
+        btnSalirAcceso.BackgroundImageLayout = ImageLayout.Zoom
+        btnSalirAcceso.FlatAppearance.BorderSize = 0
+        btnSalirAcceso.FlatAppearance.MouseDownBackColor = Color.Transparent
+        btnSalirAcceso.FlatAppearance.MouseOverBackColor = Color.Transparent
+        btnSalirAcceso.FlatStyle = FlatStyle.Flat
+        btnSalirAcceso.Font = New Font("Calibri", 12F, FontStyle.Italic, GraphicsUnit.Point)
+        btnSalirAcceso.Location = New Point(364, 12)
+        btnSalirAcceso.Name = "btnSalirAcceso"
+        btnSalirAcceso.Size = New Size(30, 30)
+        btnSalirAcceso.TabIndex = 8
+        btnSalirAcceso.UseVisualStyleBackColor = False
         ' 
         ' frmAcceso
         ' 
@@ -137,8 +134,9 @@ Partial Class frmAcceso
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
         BackgroundImageLayout = ImageLayout.Stretch
-        ClientSize = New Size(406, 541)
+        ClientSize = New Size(406, 569)
         ControlBox = False
+        Controls.Add(btnSalirAcceso)
         Controls.Add(rdBtnPrece)
         Controls.Add(rdBtnEstu)
         Controls.Add(btnAcceder)
@@ -146,15 +144,12 @@ Partial Class frmAcceso
         Controls.Add(lblUsuario)
         Controls.Add(txtBxPass)
         Controls.Add(txtBxUsuario)
-        Controls.Add(menuAcceso)
+        FormBorderStyle = FormBorderStyle.None
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
-        MainMenuStrip = menuAcceso
         MaximizeBox = False
         Name = "frmAcceso"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Acceso"
-        menuAcceso.ResumeLayout(False)
-        menuAcceso.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -166,6 +161,5 @@ Partial Class frmAcceso
     Friend WithEvents btnAcceder As Button
     Friend WithEvents rdBtnEstu As RadioButton
     Friend WithEvents rdBtnPrece As RadioButton
-    Friend WithEvents menuAcceso As MenuStrip
-    Friend WithEvents SalirMenuAcceso As ToolStripMenuItem
+    Friend WithEvents btnSalirAcceso As Button
 End Class

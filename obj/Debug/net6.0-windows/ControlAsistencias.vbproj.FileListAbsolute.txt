@@ -1,5 +1,4 @@
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmAcceso.resources
-E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmAsistenciaEstudiante.resources
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmCargaDatos.resources
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.Resources.resources
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.vbproj.GenerateResource.cache
@@ -34,3 +33,4 @@ E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\b
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.vbproj.AssemblyReference.cache
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.vbproj.CopyComplete
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmCargaAsis.resources
+E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmAsistenciaEstu.resources

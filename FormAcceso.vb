@@ -1,78 +1,117 @@
 ﻿Imports System.Data.OleDb
+Imports System.Drawing
 
 Public Class frmAcceso
+
+    ' Array de tipo TextBox
+    Dim camposAcceso() As TextBox
+
+    Private Sub frmAcceso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Crarga del array con todos los TextBox del formulario. Se usará para validar su contenido
+        camposAcceso = {txtBxUsuario, txtBxPass}
+    End Sub
 
     ' Cadena de conexión a la base de datos Access
     Private connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source= E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
 
     Private Sub btnAcceder_Click(sender As Object, e As EventArgs) Handles btnAcceder.Click
-        Dim usuario As String = txtBxUsuario.Text
-        Dim contraseña As String = txtBxPass.Text
-        Dim sqlQuery As String = ""
 
-        ' El valor del radiobutton define el nombre de la tabla que guardo en la variable 
-        If rdBtnEstu.Checked = True Then
+        If modValidaciones.camposLlenos(camposAcceso) = True Then
 
-            ' Consulta SQL para verificar el usuario y la contraseña en la tabla Estudiantes
-            sqlQuery = "SELECT COUNT(*) 
-                        FROM Estudiantes 
-                        WHERE StrComp(dni_estu, @Usuario, 0) = 0 AND StrComp(pass_estu, @Contraseña, 0) = 0"
+            Dim usuario As String = txtBxUsuario.Text
+            Dim contraseña As String = txtBxPass.Text
+            Dim sqlQuery As String = "" ' Si no se le asigna algún valor antes de usarlo da Error
 
-        ElseIf rdBtnPrece.Checked = True Then
+            ' El valor del RadioButton define el nombre de la tabla que se guarda en la variable 
+            If rdBtnEstu.Checked = True Then
 
-            ' Consulta SQL para verificar el usuario y la contraseña en la tabla Preceptores
-            sqlQuery = "SELECT COUNT(*) 
-                        FROM Preceptores 
-                        WHERE StrComp(dni_prece, @Usuario, 0) = 0 AND StrComp(pass_prece, @Contraseña, 0) = 0"
+                ' Consulta SQL para verificar el usuario y la contraseña en la tabla Estudiantes
+                ' La consulta SQL realiza un conteo de las veces que se cumplen la condición del WHERE
+                sqlQuery = "SELECT COUNT(*) 
+                            FROM Estudiantes 
+                            WHERE dni_estu = @Usuario AND pass_estu = @Contraseña"
 
-        End If
+            Else    ' Esto significa que el RadioButton seleccionado es el de Preceptores
 
-        ' Utiliza la estructura Using para asegurar que la conexión se cierre automáticamente
-        Using con As New OleDbConnection(connectionString)
-            Using cmd As New OleDbCommand(sqlQuery, con)
+                ' Consulta SQL para verificar el usuario y la contraseña en la tabla Preceptores
+                sqlQuery = "SELECT COUNT(*) 
+                            FROM Preceptores 
+                            WHERE StrComp(dni_prece, @Usuario, 0) = 0 AND StrComp(pass_prece, @Contraseña, 0) = 0"
 
-                ' Parámetros para evitar la inyección de SQL
-                cmd.Parameters.AddWithValue("@Usuario", usuario)
-                cmd.Parameters.AddWithValue("@Contraseña", contraseña)
+            End If
 
-                Try
-                    con.Open()
+            ' Se utiliza la estructura Using para asegurar que la conexión se cierre automáticamente
+            Using con As New OleDbConnection(connectionString)
+                Using cmd As New OleDbCommand(sqlQuery, con)
 
-                    ' ExecuteScalar() ejecuta la consulta y devuelve un valor que representa el conteo de registros
-                    Dim result As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+                    ' Parámetros para evitar la inyección de SQL. Y ayudar a que las consultas sean más claras
+                    cmd.Parameters.AddWithValue("@Usuario", usuario)
+                    cmd.Parameters.AddWithValue("@Contraseña", contraseña)
 
-                    ' Se verifica si el conteo es mayor que 0. Si es mayor,
-                    ' significa que las credenciales son válidas y se muestra el formulario correspondiente
-                    If result > 0 Then
+                    Try
+                        ' Se abre la conexión
+                        con.Open()
 
-                        ' Se oculta el formulario actual
-                        Me.Hide()
+                        ' ExecuteScalar() ejecuta la consulta y devuelve un valor que representa el conteo de registros
+                        Dim result As Integer = Convert.ToInt32(cmd.ExecuteScalar())
 
-                        If rdBtnEstu.Checked = True Then
-                            ' Se muestra el Formulario correspondiente
-                            frmAsistenciaEstudiante.Show()
+                        ' Se verifica si el conteo es mayor que 0. Si es mayor,
+                        ' significa que las credenciales son válidas y se muestra el formulario correspondiente
+                        If result > 0 Then
+
+                            ' Se oculta el formulario actual
+                            Me.Hide()
+
+                            If rdBtnEstu.Checked = True Then
+                                ' Se muestra el Formulario correspondiente
+                                frmAsistenciaEstu.Show()
+                            Else
+                                ' Se muestra el Formulario correspondiente
+                                frmCargaAsis.Show()
+                            End If
+
                         Else
-                            ' Se muestra el Formulario correspondiente
-                            frmCargaAsis.Show()
+                            ' Mensaje por ventana emergente
+                            MsgBox("Nombre de usuario o contraseña incorrectos.")
                         End If
+                    Catch ex As Exception
+                        MsgBox("Error al iniciar sesión: " & ex.Message)
+                    End Try
 
-                    Else
-                        MessageBox.Show("Nombre de usuario o contraseña incorrectos.")
-                    End If
-                Catch ex As Exception
-                    MessageBox.Show("Error al iniciar sesión: " & ex.Message)
-                End Try
-
-            End Using  ' La conexión se cerrará automáticamente aquí
-        End Using
+                End Using  ' La conexión se cerrará automáticamente aquí
+            End Using
+        Else
+            MsgBox("No se permiten campos vacíos")
+        End If
     End Sub
 
-    Private Sub SalirMenuAcceso_Click(sender As Object, e As EventArgs) Handles SalirMenuAcceso.Click
-        ' Cierra la aplicación, finaliza todos los formularios y termina el proceso de la aplicación.
-        Application.Exit()
+    Private Sub btnSalirAcceso_Click(sender As Object, e As EventArgs) Handles btnSalirAcceso.Click
+        ' Se llama a la función correspondiente que se encuentra en un Módulo
+        modFunciones.SalirAplicacion()
+    End Sub
+
+    Private Sub btnSalirAcceso_MouseHover(sender As Object, e As EventArgs) Handles btnSalirAcceso.MouseHover
+        ' Este evento se desencadena cuando el mouse entra en el área del botón
+        ' Cambia la imagen de fondo del botón cuando el mouse está sobre él
+        btnSalirAcceso.BackgroundImage = My.Resources.apagarR_small
+    End Sub
+
+    Private Sub btnSalirAcceso_MouseLeave(sender As Object, e As EventArgs) Handles btnSalirAcceso.MouseLeave
+        ' Este evento se desencadena cuando el mouse sale del área del botón
+        ' Restaura la imagen de fondo original del botón cuando el mouse sale de él
+        btnSalirAcceso.BackgroundImage = My.Resources.apagarN_small
+    End Sub
+
+    Private Sub txtBxUsuario_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtBxUsuario.KeyPress
+        ' Se llama a la función correspondiente que se encuentra en un Módulo
+        modValidaciones.soloNumeros(e)  ' Se pasa la variable (e) que contiene el evento que será analizado
     End Sub
 End Class
 
+
+
+
+'*************************************************************************************************************************
 
 'StrComp(string1, string2, modoComparacion)
 'string1 y String 2 son las cadenas a comparar.

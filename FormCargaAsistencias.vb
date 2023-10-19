@@ -8,7 +8,6 @@ Public Class frmCargaAsis
     Private Sub frmCargaAsistencias_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Cargar los cursos en el ComboBox desde la base de datos
         CargarComboBox()
-
     End Sub
 
     ' Evento que detecta un cambio en el valor del ComboBox
@@ -30,37 +29,44 @@ Public Class frmCargaAsis
         Using connection As New OleDbConnection(connectionString)
             Using command As New OleDbCommand(sqlQuery, connection)
 
-                ' Crear un adaptador de datos
+                ' Crear un adaptador de datos para obtener datos de la base de datos
                 Dim adapter As New OleDbDataAdapter(command)
+
+                ' Crear un nuevo DataTable para almacenar los datos
                 Dim dataTable As New DataTable()
 
-                ' Abrir la conexión y llenar la tabla con los resultados
+                ' Definir las columnas del DataTable
+                dataTable.Columns.Add("id_curso", GetType(Integer))
+                dataTable.Columns.Add("desc_curso", GetType(String))
+
+                ' Agregar una fila al DataTable para mostrar "Cursos" como opción predeterminada en el ComboBox
+                dataTable.Rows.Add(0, "Cursos")
+
+                ' Abrir la conexión a la base de datos
                 connection.Open()
+
+                ' Llenar el DataTable con los resultados de la consulta
                 adapter.Fill(dataTable)
+
+                ' Cerrar la conexión a la base de datos
                 connection.Close()
 
-                ' Agregar una fila al principio (fila "dummy")
-                ' Esta será la que aparezca por defecto en el ComboBox
-                Dim dummyRow As DataRow = dataTable.NewRow()
-                dummyRow("id_curso") = 0  ' O cualquier valor que represente la fila dummy
-                dummyRow("desc_curso") = "Cursos"  ' Texto que deseas mostrar
-                dataTable.Rows.InsertAt(dummyRow, 0)  ' Insertar la fila dummy en la primera posición
-
-                ' Mostrar los resultados en el ComboBox
+                ' Configurar el ComboBox para mostrar los datos del DataTable
                 cmbBxCurso.DataSource = dataTable
                 cmbBxCurso.DisplayMember = "desc_curso"
                 cmbBxCurso.ValueMember = "id_curso"
-
             End Using
         End Using
     End Sub
+
+
 
     Private Sub CargarDataGridView()
         ' Limpiar el DataGridView antes de mostrar nuevos datos
         dtGVCargaAsistencias.Rows.Clear()
 
         ' Obtener el ID del Curso seleccionado
-        Dim idCurso As Integer = Val(cmbBxCurso.SelectedValue.ToString)
+        Dim idCurso As Integer = cmbBxCurso.SelectedIndex
 
         ' Consulta SQL para obtener los datos de estudiantes y asistencias
         Dim sqlQuery As String = "SELECT id_estu, nomb_estu, apell_estu 
@@ -140,11 +146,14 @@ Public Class frmCargaAsis
     End Sub
 
     Private Sub InsertarAsistencia(connection As OleDbConnection, fecha As String, presente As Boolean, idEstudiante As Integer, dniPrece As Integer)
-        ' Consulta SQL para insertar un nuevo registro en la tabla Asistencias
+        'Consulta SQL para insertar un nuevo registro en la tabla Asistencias
         Dim sqlQuery As String = "INSERT INTO Asistencias (fecha_asis, estado_asis, id_estu, id_prece)
-                                    SELECT @Fecha AS fecha_asis, @Presente AS estado_asis, @ID_Estudiante AS id_estu, Preceptores.id_prece 
-                                    FROM Preceptores 
+                                    SELECT @Fecha, @Presente, @ID_Estudiante, Preceptores.id_prece
+                                    FROM Preceptores
                                     WHERE Preceptores.dni_prece = @DNI_Preceptor"
+        'Esta consulta está insertando datos en la tabla "Asistencias," donde los valores de "fecha_asis",
+        '"estado_asis", "id_estu", y "id_prece" se obtienen de las variables proporcionadas (@Fecha, @Presente, @ID_Estudiante)
+        'y de la tabla "Preceptores" (específicamente, el valor de "id_prece" donde "dni_prece" coincide con @DNI_Preceptor).
 
         ' Crear un nuevo comando
         Using command As New OleDbCommand(sqlQuery, connection)
@@ -159,8 +168,42 @@ Public Class frmCargaAsis
         End Using
     End Sub
 
+    Private Sub btnSalirAsis_Click_1(sender As Object, e As EventArgs) Handles btnSalirAsis.Click
+        modFunciones.SalirAplicacion()
+    End Sub
 
+    Private Sub btnSalirAsis_MouseHover(sender As Object, e As EventArgs) Handles btnSalirAsis.MouseHover
+        ' Este evento se desencadena cuando el mouse entra en el área del botón
+        ' Cambia la imagen de fondo del botón cuando el mouse está sobre él
+        btnSalirAsis.BackgroundImage = My.Resources.apagarR_small
+    End Sub
+
+    Private Sub btnSalirAsis_MouseLeave(sender As Object, e As EventArgs) Handles btnSalirAsis.MouseLeave
+        ' Este evento se desencadena cuando el mouse sale del área del botón
+        ' Restaura la imagen de fondo original del botón cuando el mouse sale de él
+        btnSalirAsis.BackgroundImage = My.Resources.apagarN_small
+    End Sub
 
 End Class
 
 
+'**************************************************************************************************************************
+
+'INSERT INTO Asistencias (fecha_asis, estado_asis, id_estu, id_prece): Esto indica que se insertarán datos en
+'la tabla "Asistencias" en las columnas "fecha_asis," "estado_asis," "id_estu," y "id_prece."
+
+'SELECT @Fecha, @Presente, @ID_Estudiante, Preceptores.id_prece:Esta parte de la consulta está realizando una
+'selección de datos.
+
+'@Fecha, @Presente, y @ID_Estudiante son variables o parámetros que asignan valores a las columnas "fecha_asis".
+'"estado_asis" y "id_estu" de la tabla "Asistencias".
+
+'Preceptores.id_prece es una columna seleccionada de la tabla "Preceptores" y se asigna a la columna "id_prece"
+'de la tabla "Asistencias."
+
+'FROM Preceptores: Indica que los datos provienen de la tabla "Preceptores."
+
+'WHERE Preceptores.dni_prece = @DNI_Preceptor: Esto filtra los resultados de la tabla "Preceptores" para que
+'solo se seleccione la fila donde el valor de la columna "dni_prece" coincide con el valor de la variable @DNI_Preceptor
+
+'****************************************************************************************************************************

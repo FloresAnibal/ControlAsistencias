@@ -31,6 +31,7 @@ Partial Class frmCargaAsis
         cmbBxCurso = New ComboBox()
         dtTPFechaAsistencia = New DateTimePicker()
         btnGuardarAsis = New Button()
+        btnSalirAsis = New Button()
         CType(dtGVCargaAsistencias, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -42,12 +43,12 @@ Partial Class frmCargaAsis
         dtGVCargaAsistencias.Anchor = AnchorStyles.None
         dtGVCargaAsistencias.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dtGVCargaAsistencias.Columns.AddRange(New DataGridViewColumn() {idEstu, nombre, apellido, asistencia})
-        dtGVCargaAsistencias.Location = New Point(453, 23)
+        dtGVCargaAsistencias.Location = New Point(23, 51)
         dtGVCargaAsistencias.Name = "dtGVCargaAsistencias"
         dtGVCargaAsistencias.RowHeadersVisible = False
         dtGVCargaAsistencias.RowHeadersWidth = 51
         dtGVCargaAsistencias.RowTemplate.Height = 29
-        dtGVCargaAsistencias.Size = New Size(515, 555)
+        dtGVCargaAsistencias.Size = New Size(515, 465)
         dtGVCargaAsistencias.TabIndex = 0
         ' 
         ' idEstu
@@ -85,31 +86,45 @@ Partial Class frmCargaAsis
         ' 
         ' cmbBxCurso
         ' 
-        cmbBxCurso.DisplayMember = "0"
         cmbBxCurso.FormattingEnabled = True
         cmbBxCurso.ItemHeight = 20
-        cmbBxCurso.Location = New Point(342, 23)
+        cmbBxCurso.Location = New Point(840, 50)
         cmbBxCurso.Name = "cmbBxCurso"
         cmbBxCurso.Size = New Size(82, 28)
         cmbBxCurso.TabIndex = 2
-        cmbBxCurso.Text = "Curso"
-        cmbBxCurso.ValueMember = "0"
         ' 
         ' dtTPFechaAsistencia
         ' 
-        dtTPFechaAsistencia.Location = New Point(34, 23)
+        dtTPFechaAsistencia.Location = New Point(556, 51)
         dtTPFechaAsistencia.Name = "dtTPFechaAsistencia"
         dtTPFechaAsistencia.Size = New Size(269, 27)
         dtTPFechaAsistencia.TabIndex = 3
         ' 
         ' btnGuardarAsis
         ' 
-        btnGuardarAsis.Location = New Point(128, 333)
+        btnGuardarAsis.Location = New Point(677, 349)
         btnGuardarAsis.Name = "btnGuardarAsis"
-        btnGuardarAsis.Size = New Size(94, 29)
+        btnGuardarAsis.Size = New Size(180, 62)
         btnGuardarAsis.TabIndex = 4
         btnGuardarAsis.Text = "Guardar"
         btnGuardarAsis.UseVisualStyleBackColor = True
+        ' 
+        ' btnSalirAsis
+        ' 
+        btnSalirAsis.Anchor = AnchorStyles.None
+        btnSalirAsis.BackColor = Color.Transparent
+        btnSalirAsis.BackgroundImage = My.Resources.Resources.apagarN_small
+        btnSalirAsis.BackgroundImageLayout = ImageLayout.Zoom
+        btnSalirAsis.FlatAppearance.BorderSize = 0
+        btnSalirAsis.FlatAppearance.MouseDownBackColor = Color.Transparent
+        btnSalirAsis.FlatAppearance.MouseOverBackColor = Color.Transparent
+        btnSalirAsis.FlatStyle = FlatStyle.Flat
+        btnSalirAsis.Font = New Font("Calibri", 12F, FontStyle.Italic, GraphicsUnit.Point)
+        btnSalirAsis.Location = New Point(947, 12)
+        btnSalirAsis.Name = "btnSalirAsis"
+        btnSalirAsis.Size = New Size(30, 30)
+        btnSalirAsis.TabIndex = 9
+        btnSalirAsis.UseVisualStyleBackColor = False
         ' 
         ' frmCargaAsis
         ' 
@@ -118,11 +133,14 @@ Partial Class frmCargaAsis
         AutoSize = True
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
         BackgroundImageLayout = ImageLayout.Stretch
-        ClientSize = New Size(991, 601)
+        ClientSize = New Size(991, 569)
+        Controls.Add(btnSalirAsis)
         Controls.Add(btnGuardarAsis)
         Controls.Add(dtTPFechaAsistencia)
         Controls.Add(cmbBxCurso)
         Controls.Add(dtGVCargaAsistencias)
+        FormBorderStyle = FormBorderStyle.None
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         Name = "frmCargaAsis"
         Padding = New Padding(20)
         StartPosition = FormStartPosition.CenterScreen
@@ -139,4 +157,5 @@ Partial Class frmCargaAsis
     Friend WithEvents nombre As DataGridViewTextBoxColumn
     Friend WithEvents apellido As DataGridViewTextBoxColumn
     Friend WithEvents asistencia As DataGridViewCheckBoxColumn
+    Friend WithEvents btnSalirAsis As Button
 End Class
