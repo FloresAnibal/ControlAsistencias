@@ -1,6 +1,4 @@
 ﻿Imports System.Data.OleDb
-Imports System.Drawing.Printing
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class frmAsistenciaEstu
 
@@ -8,66 +6,70 @@ Public Class frmAsistenciaEstu
     Private connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source= E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
 
     Private Sub frmAsistenciaEstudiante_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
         ' Limpiar el ListView antes de mostrar nuevos resultados
         lstVwAsis.Items.Clear()
 
-        ' Obtener el DNI ingresado por el usuario en el formulario de acceso
+        ' Obtener el DNI ingresado por el usuario que está alojado en el formulario de acceso
         Dim dni As String = frmAcceso.txtBxUsuario.Text
 
         ' Consulta SQL para obtener NOMBRE, FECHA y ESTADO para el estudiante con el DNI especificado
-        Dim query As String = "SELECT Estudiantes.nomb_estu, Asistencias.fecha_asis, Asistencias.estado_asis
-                               FROM Estudiantes INNER JOIN Asistencias ON Estudiantes.id_estu = Asistencias.id_estu
-                               WHERE Estudiantes.dni_estu = @DNI;"
+        Dim sqlQuery As String = "SELECT Estudiantes.nomb_estu, Asistencias.fecha_asis, Asistencias.estado_asis
+                                  FROM Estudiantes 
+                                  INNER JOIN Asistencias ON Estudiantes.id_estu = Asistencias.id_estu
+                                  WHERE Estudiantes.dni_estu = @DNI;"
 
         ' Crear la conexión a la base de datos
         Using connection As New OleDbConnection(connectionString)
-            Using command As New OleDbCommand(query, connection)
+            Using command As New OleDbCommand(sqlQuery, connection)
                 ' Agregar el parámetro para el DNI
                 command.Parameters.AddWithValue("@DNI", dni)
 
                 ' Abrir la conexión
                 connection.Open()
 
-                ' Ejecutar la consulta y obtener un lector de datos
-                Dim reader As OleDbDataReader = command.ExecuteReader()
+                ' Crear un adaptador de datos
+                Dim adapter As New OleDbDataAdapter(command)
 
-                ' Iterar sobre los resultados y agregarlos al ListView
-                While reader.Read()
-                    ' Utilizamos Convert.ToDateTime para convertir la cadena de fecha y hora en un objeto DateTime
-                    Dim fechaHora As DateTime = Convert.ToDateTime(reader("fecha_asis"))
+                ' Crear un DataTable para almacenar los resultados
+                Dim dataTable As New DataTable()
 
-                    ' Usamos ToShortDateString para obtener solo la fecha en formato de cadena corta
+                ' Llenar el DataTable con los resultados de la consulta
+                adapter.Fill(dataTable)
+
+                ' Cerrar la conexión
+                connection.Close()
+
+                ' Iterar sobre los resultados del DataTable y agregarlos al ListView
+                For Each row As DataRow In dataTable.Rows
+                    ' Obtener la fecha y hora de la fila y convertirla a un objeto DateTime
+                    Dim fechaHora As DateTime = Convert.ToDateTime(row("fecha_asis"))
+
+                    ' Obtener solo la fecha en formato de cadena corta (sin la hora)
                     Dim fecha As String = fechaHora.ToShortDateString()
 
-                    ' Usamos Convert.ToBoolean para convertir la cadena en un valor Booleano
-                    ' Para mostrar "Presente" si el estado es True y "Ausente" si el estado es False
-                    Dim estado As Boolean = Convert.ToBoolean(reader("estado_asis"))
+                    ' Obtener el estado de asistencia de la fila (true o false) y convertirlo a un valor booleano
+                    Dim estado As Boolean = Convert.ToBoolean(row("estado_asis"))
 
-                    ' Convertir el estado booleano a una cadena "Presente" o "Ausente"
+                    ' Convertir el valor booleano del estado a una cadena "Presente" o "Ausente" según corresponda
                     Dim estadoString As String = If(estado, "Presente", "Ausente")
 
-                    'If estado = True Then
-                    '    estadoString = "presente"
-                    'Else
-                    '    estadoString = "ausente"
-                    'End If
-
+                    ' Crear un nuevo elemento de ListViewItem con la fecha y el estado en formato de cadena
                     Dim item As New ListViewItem({fecha, estadoString})
 
+                    ' Agregar el elemento al ListView
                     lstVwAsis.Items.Add(item)
-                End While
+                Next
 
-                ' Cerrar el lector de datos y la conexión
-                reader.Close()
-                connection.Close()
             End Using
         End Using
     End Sub
 
 
-    Private Sub btnSalirEstu_Click_1(sender As Object, e As EventArgs) Handles btnSalirEstu.Click
-        modFunciones.SalirAplicacion()
+
+    '*******************************- COMPORTAMIENTO DEL BOTÓN SALIR -*******************************
+    Private Sub btnSalirEstu_Click(sender As Object, e As EventArgs) Handles btnSalirEstu.Click
+        ' Cierra la aplicación, finaliza todos los formularios y termina el proceso de la aplicación.
+        Application.Exit()
     End Sub
 
     Private Sub btnSalirEstu_MouseHover(sender As Object, e As EventArgs) Handles btnSalirEstu.MouseHover
@@ -76,11 +78,46 @@ Public Class frmAsistenciaEstu
         btnSalirEstu.BackgroundImage = My.Resources.apagarR_small
     End Sub
 
-    Private Sub btnSalirAcceso_MouseLeave(sender As Object, e As EventArgs) Handles btnSalirEstu.MouseLeave
+    Private Sub btnSalirEstu_MouseLeave(sender As Object, e As EventArgs) Handles btnSalirEstu.MouseLeave
         ' Este evento se desencadena cuando el mouse sale del área del botón
         ' Restaura la imagen de fondo original del botón cuando el mouse sale de él
         btnSalirEstu.BackgroundImage = My.Resources.apagarN_small
     End Sub
-
+    '*************************************************************************************************
 
 End Class
+
+
+
+'+++++++++++++++++++++++++++++++++++- DETALLES DE LA CONSULTA SQL -+++++++++++++++++++++++++++++++++++
+
+' SELECT Estudiantes.nomb_estu, Asistencias.fecha_asis, Asistencias.estado_asis:
+' Esta línea indica que la consulta seleccionará tres columnas de la base de datos. Estas columnas son
+' nomb_estu de la tabla Estudiantes, y fecha_asis y estado_asis de la tabla Asistencias. La consulta devolverá
+' estos datos en el resultado.
+
+' FROM Estudiantes INNER JOIN Asistencias ON Estudiantes.id_estu = Asistencias.id_estu:
+' En esta línea, se especifica que los datos provienen de dos tablas: Estudiantes y Asistencias. La palabra
+' clave INNER JOIN indica que se realizará una unión interna entre estas dos tablas utilizando la condición de
+' igualdad Estudiantes.id_estu = Asistencias.id_estu. Esto significa que la consulta combinará los registros
+' donde el valor de id_estu en la tabla Estudiantes sea igual al valor de id_estu en la tabla Asistencias.
+
+' WHERE Estudiantes.dni_estu = @DNI;:
+' Esta línea establece una condición para filtrar los resultados de la consulta. Solo se seleccionarán los
+' registros donde el valor de dni_estu en la tabla Estudiantes sea igual al valor proporcionado en el parámetro
+' @DNI. En otras palabras, la consulta recuperará los datos de estudiantes y asistencias para un estudiante
+' específico identificado por su número de identificación (dni_estu).
+
+'+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+'####################################- SENTENCIA IF SIMPLIFICADA -####################################
+
+' La sentencia: If(estado, "Presente", "Ausente")
+
+' Equivale a: If estado = True Then
+'               estadoString = "presente"
+'             Else
+'               estadoString = "ausente"
+'             End If
+
+'#####################################################################################################

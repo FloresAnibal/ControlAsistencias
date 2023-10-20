@@ -1,5 +1,4 @@
 ﻿Imports System.Data.OleDb
-Imports System.Drawing
 
 Public Class frmAcceso
 
@@ -16,11 +15,12 @@ Public Class frmAcceso
 
     Private Sub btnAcceder_Click(sender As Object, e As EventArgs) Handles btnAcceder.Click
 
+        ' Se valida la entrada de datos llamando a la función correspondiente
         If modValidaciones.camposLlenos(camposAcceso) = True Then
 
             Dim usuario As String = txtBxUsuario.Text
             Dim contraseña As String = txtBxPass.Text
-            Dim sqlQuery As String = "" ' Si no se le asigna algún valor antes de usarlo da Error
+            Dim sqlQuery As String
 
             ' El valor del RadioButton define el nombre de la tabla que se guarda en la variable 
             If rdBtnEstu.Checked = True Then
@@ -29,31 +29,31 @@ Public Class frmAcceso
                 ' La consulta SQL realiza un conteo de las veces que se cumplen la condición del WHERE
                 sqlQuery = "SELECT COUNT(*) 
                             FROM Estudiantes 
-                            WHERE dni_estu = @Usuario AND pass_estu = @Contraseña"
+                            WHERE dni_estu = @Usuario AND StrComp(pass_estu, @Contraseña, 0) = 0"
 
             Else    ' Esto significa que el RadioButton seleccionado es el de Preceptores
 
                 ' Consulta SQL para verificar el usuario y la contraseña en la tabla Preceptores
                 sqlQuery = "SELECT COUNT(*) 
                             FROM Preceptores 
-                            WHERE StrComp(dni_prece, @Usuario, 0) = 0 AND StrComp(pass_prece, @Contraseña, 0) = 0"
+                            WHERE dni_prece = @Usuario AND StrComp(pass_prece, @Contraseña, 0) = 0"
 
             End If
 
             ' Se utiliza la estructura Using para asegurar que la conexión se cierre automáticamente
-            Using con As New OleDbConnection(connectionString)
-                Using cmd As New OleDbCommand(sqlQuery, con)
+            Using connection As New OleDbConnection(connectionString)
+                Using command As New OleDbCommand(sqlQuery, connection)
 
                     ' Parámetros para evitar la inyección de SQL. Y ayudar a que las consultas sean más claras
-                    cmd.Parameters.AddWithValue("@Usuario", usuario)
-                    cmd.Parameters.AddWithValue("@Contraseña", contraseña)
+                    command.Parameters.AddWithValue("@Usuario", usuario)
+                    command.Parameters.AddWithValue("@Contraseña", contraseña)
 
                     Try
                         ' Se abre la conexión
-                        con.Open()
+                        connection.Open()
 
                         ' ExecuteScalar() ejecuta la consulta y devuelve un valor que representa el conteo de registros
-                        Dim result As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+                        Dim result As Integer = Convert.ToInt32(command.ExecuteScalar())
 
                         ' Se verifica si el conteo es mayor que 0. Si es mayor,
                         ' significa que las credenciales son válidas y se muestra el formulario correspondiente
@@ -74,6 +74,7 @@ Public Class frmAcceso
                             ' Mensaje por ventana emergente
                             MsgBox("Nombre de usuario o contraseña incorrectos.")
                         End If
+
                     Catch ex As Exception
                         MsgBox("Error al iniciar sesión: " & ex.Message)
                     End Try
@@ -85,9 +86,16 @@ Public Class frmAcceso
         End If
     End Sub
 
-    Private Sub btnSalirAcceso_Click(sender As Object, e As EventArgs) Handles btnSalirAcceso.Click
+
+    Private Sub txtBxUsuario_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtBxUsuario.KeyPress
         ' Se llama a la función correspondiente que se encuentra en un Módulo
-        modFunciones.SalirAplicacion()
+        modValidaciones.soloNumeros(e)  ' Se pasa la variable (e) que contiene el evento que será analizado
+    End Sub
+
+    '*******************************- COMPORTAMIENTO DEL BOTÓN SALIR -*******************************
+    Private Sub btnSalirAcceso_Click(sender As Object, e As EventArgs) Handles btnSalirAcceso.Click
+        ' Cierra la aplicación, finaliza todos los formularios y termina el proceso de la aplicación.
+        Application.Exit()
     End Sub
 
     Private Sub btnSalirAcceso_MouseHover(sender As Object, e As EventArgs) Handles btnSalirAcceso.MouseHover
@@ -101,21 +109,18 @@ Public Class frmAcceso
         ' Restaura la imagen de fondo original del botón cuando el mouse sale de él
         btnSalirAcceso.BackgroundImage = My.Resources.apagarN_small
     End Sub
+    '*************************************************************************************************
 
-    Private Sub txtBxUsuario_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtBxUsuario.KeyPress
-        ' Se llama a la función correspondiente que se encuentra en un Módulo
-        modValidaciones.soloNumeros(e)  ' Se pasa la variable (e) que contiene el evento que será analizado
-    End Sub
 End Class
 
 
 
 
-'*************************************************************************************************************************
+'+++++++++++++++++++++++++++- DETALLES DE LA FUNCIÓN StrComp() -+++++++++++++++++++++++++++++++++++++++
+' StrComp(string1, string2, modoComparacion)
+' string1 y String 2 son las cadenas a comparar.
+' modoComparacion es cómo se comparan las cadenas, pudiendo ser "Binario" (valor 0) que distingue
+' las mayúsculas de minúsculas y "Texto" (valor 1) que no distingue mayúsculas de minúsculas.
 
-'StrComp(string1, string2, modoComparacion)
-'string1 y String 2 son las cadenas a comparar.
-'modoComparacion es cómo se comparan las cadenas, pudiendo ser "Binario" (valor 0) que distingue
-'las mayúsculas de minúsculas y "Texto" (valor 1) que no distingue mayúsculas de minúsculas.
-
-'La función devuelve 0 si las cadenas son iguales. Si no lo son, devuelve 1 o -1.
+' La función devuelve 0 si las cadenas son iguales. Si no lo son, devuelve 1 o -1.
+'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

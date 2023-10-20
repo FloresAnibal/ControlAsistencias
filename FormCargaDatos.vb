@@ -1,136 +1,145 @@
 ﻿Imports System.Data.OleDb
 
-
 Public Class frmCargaDatos
 
     ' Array de tipo TextBox
     Dim campos() As TextBox
 
     Private Sub frmCargaDatos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Carga del array con todos los TextBox del formulario
+        ' Carga del array con todos los TextBox del formulario. Para facilitar las validaciones
         campos = {txtBxNombres, txtBxApellido, txtBxDni, txtBxFechaNac, txtBxCorreo, txtBxTelefono, txtBxCalle, txtBxAltura}
     End Sub
 
-    Private Sub btnGuardarDatos_Click(sender As Object, e As EventArgs) Handles btnGuardarDatos.Click
+    ' Configuración de la cadena de conexión
+    Private connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0; 
+                                          Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
 
-        ' Función que comprueba si hay campos nulos o vacíos
-        If campos.Any(Function(txbx) String.IsNullOrEmpty(txbx.Text)) Then
-            MsgBox("Hay campos vacíos")
-            Return
+    Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click
+
+        If btnNuevo.Text = "Nuevo" Then
+            ' Cambiamos la leyenda del botón
+            btnNuevo.Text = "Cancelar"
+
+            ' Habilitamos todos los TextBox y el ComboBox
+            HabilitarTodo()
+
+            ' Activamos/Desactivamos botones según el caso
+            btnGuardarDatos.Enabled = True
+            btnBuscar.Enabled = False
+        Else
+            ' Cambiamos la leyenda del botón
+            btnNuevo.Text = "Nuevo"
+
+            ' Vaciar los TextBox y el ComboBox llamando al procedimiento que lo hará 
+            VaciarTodo()
+
+            ' Bloqueamos todos los TextBox y el ComboBox
+            InhabilitarTodo()
+
+            ' Activamos/Desactivamos botones según el caso
+            btnGuardarDatos.Enabled = False
+            btnEditar.Enabled = False
+            btnBuscar.Enabled = True
+
         End If
-
-        Try
-            Dim con As String = "Provider=Microsoft.ACE.OLEDB.16.0; Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
-
-            Using connDB As New OleDbConnection(con)
-                connDB.Open()
-                Using comd As New OleDbCommand("INSERT INTO Estudiantes (nomb_estu, apell_estu, dni_estu, fecha_nac_estu, nro_tel_estu, email_estu, calle_estu, altura_calle_estu) 
-                                                VALUES (@Nom, @Ape, @Dni, @Nac, @Tel, @Cor, @Cal, @Alt)", connDB)
-                    ' Asignar parámetros
-                    comd.Parameters.AddWithValue("@Nom", txtBxNombres.Text)
-                    comd.Parameters.AddWithValue("@Ape", txtBxApellido.Text)
-                    comd.Parameters.AddWithValue("@Dni", txtBxDni.Text)
-                    comd.Parameters.AddWithValue("@Nac", txtBxFechaNac.Text)
-                    comd.Parameters.AddWithValue("@Tel", txtBxTelefono.Text)
-                    comd.Parameters.AddWithValue("@Cor", txtBxCorreo.Text)
-                    comd.Parameters.AddWithValue("@Cal", txtBxCalle.Text)
-                    comd.Parameters.AddWithValue("@Alt", txtBxAltura.Text)
-
-                    comd.ExecuteNonQuery()
-                End Using
-            End Using
-
-            MsgBox("El estudiante se registró correctamente.")
-
-            ' Vaciar los TextBox llamando a la función que lo hará
-            Vaciar()
-
-        Catch ex As Exception
-            MsgBox("Error al registrar el estudiante: " & ex.Message) ' & ex.Message Muestra información acerca del error
-        End Try
     End Sub
 
 
-    Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click
-        ' Cambiamos el nombre del botón
-        If btnNuevo.Text = "Nuevo" Then
-            btnNuevo.Text = "Cancelar"
+    Private Sub btnGuardarDatos_Click(sender As Object, e As EventArgs) Handles btnGuardarDatos.Click
+        ' Se llama a la función para validar los campos. Se pasa la variable "campos" que contiene todos los TextBox
+        If modValidaciones.camposLlenos(campos) = True And cmbBxCargaCurso.SelectedIndex > 0 Then
 
-            ' Habilitar todos los TextBox  
-            For Each campo As TextBox In campos
-                campo.Enabled = True
-            Next
+            Try
+                Dim sqlQuery As String = "INSERT INTO Estudiantes (nomb_estu, apell_estu, dni_estu, fecha_nac_estu, nro_tel_estu, email_estu, calle_estu, altura_calle_estu, id_curso) 
+                                          VALUES (@Nom, @Ape, @Dni, @Nac, @Tel, @Cor, @Cal, @Alt, @Cur)"
 
-            btnGuardarDatos.Enabled = True
-            btnBuscar.Enabled = false
-        Else
-            ' Cambiamos el nombre del botón
-            If btnNuevo.Text = "Cancelar" Then
+                Using connection As New OleDbConnection(connectionString)
+
+                    connection.Open()
+
+                    Using command As New OleDbCommand(sqlQuery, connection)
+                        ' Asignar parámetros
+                        command.Parameters.AddWithValue("@Nom", txtBxNombres.Text)
+                        command.Parameters.AddWithValue("@Ape", txtBxApellido.Text)
+                        command.Parameters.AddWithValue("@Dni", txtBxDni.Text)
+                        command.Parameters.AddWithValue("@Nac", txtBxFechaNac.Text)
+                        command.Parameters.AddWithValue("@Tel", txtBxTelefono.Text)
+                        command.Parameters.AddWithValue("@Cor", txtBxCorreo.Text)
+                        command.Parameters.AddWithValue("@Cal", txtBxCalle.Text)
+                        command.Parameters.AddWithValue("@Alt", txtBxAltura.Text)
+                        command.Parameters.AddWithValue("@Cur", cmbBxCargaCurso.SelectedIndex)
+                        ' Ejecutamos la consulta SQL
+                        command.ExecuteNonQuery()
+                    End Using
+                End Using
+
+                MsgBox("Los datos se registraron correctamente.", "Éxito")
+
+                ' Vaciar los TextBox llamando al procedimiento que lo hará
+                VaciarTodo()
+
+                ' Cambaimos la leyenda del botón
                 btnNuevo.Text = "Nuevo"
-
-                ' Vaciar los TextBox llamando a la función que lo hará 
-                Vaciar()
-
-                ' Bloquar todos los TextBox  
-                For Each campo As TextBox In campos
-                    campo.Enabled = False
-                Next
-
+                ' Activamos/Desactivamos botones según el caso
                 btnGuardarDatos.Enabled = False
-                btnEditar.Enabled = False
                 btnBuscar.Enabled = True
 
+            Catch ex As Exception
+                MsgBox("Error al registrar los datos: " & ex.Message) ' & ex.Message Muestra información acerca del error
+            End Try
 
-            Else
-            End If
+        Else
+            MsgBox("No se permiten campos vacíos", "Aviso")
         End If
+
     End Sub
 
     Private Sub btnEditar_Click(sender As Object, e As EventArgs) Handles btnEditar.Click
 
-        ' Configuración de la cadena de conexión
-        Dim connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0; Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
-
-        Using connDB As New OleDbConnection(connectionString)
-            connDB.Open()
+        Using connection As New OleDbConnection(connectionString)
+            connection.Open()
 
             If btnEditar.Text = "Editar" Then
-                ' Habilitar edición
+                ' Cambiamos la leyenda del botón
                 btnEditar.Text = "Actualizar"
 
-                ' Habilitar todos los TextBox  
-                For Each campo As TextBox In campos
-                    campo.Enabled = True
-                Next
+                HabilitarTodo()
             Else
                 Try
-                    ' Realizar la actualización
+                    ' Preparamos la consulta para la actualización
                     Dim sqlQuery As String = "UPDATE Estudiantes 
-                                              SET nomb_estu = @Nom, apell_estu = @Ape, dni_estu = @Dni, fecha_nac_estu = @Fech, nro_tel_estu = @Tel, email_estu = @Mail, calle_estu = @Calle, altura_calle_estu = @Altu 
+                                              SET nomb_estu = @Nom, apell_estu = @Ape, dni_estu = @Dni, fecha_nac_estu = @Fech, nro_tel_estu = @Tel, email_estu = @Mail, calle_estu = @Calle, altura_calle_estu = @Altu, id_curso = @Cur
                                               WHERE dni_estu = @Dni"
-                    Using comd As New OleDbCommand(sqlQuery, connDB)
-                        ' Asignar parámetros
-                        comd.Parameters.AddWithValue("@Nom", txtBxNombres.Text)
-                        comd.Parameters.AddWithValue("@Ape", txtBxApellido.Text)
-                        comd.Parameters.AddWithValue("@Dni", txtBxDni.Text)
-                        comd.Parameters.AddWithValue("@Fech", txtBxFechaNac.Text)
-                        comd.Parameters.AddWithValue("@Tel", txtBxTelefono.Text)
-                        comd.Parameters.AddWithValue("@Mail", txtBxCorreo.Text)
-                        comd.Parameters.AddWithValue("@Calle", txtBxCalle.Text)
-                        comd.Parameters.AddWithValue("@Altu", txtBxAltura.Text)
 
-                        comd.ExecuteNonQuery()
+                    Using command As New OleDbCommand(sqlQuery, connection)
+                        ' Asignar parámetros para consulta SQL
+                        command.Parameters.AddWithValue("@Nom", txtBxNombres.Text)
+                        command.Parameters.AddWithValue("@Ape", txtBxApellido.Text)
+                        command.Parameters.AddWithValue("@Dni", txtBxDni.Text)
+                        command.Parameters.AddWithValue("@Fech", txtBxFechaNac.Text)
+                        command.Parameters.AddWithValue("@Tel", txtBxTelefono.Text)
+                        command.Parameters.AddWithValue("@Mail", txtBxCorreo.Text)
+                        command.Parameters.AddWithValue("@Calle", txtBxCalle.Text)
+                        command.Parameters.AddWithValue("@Altu", txtBxAltura.Text)
+                        command.Parameters.AddWithValue("@Altu", cmbBxCargaCurso.SelectedIndex)
+                        ' Ejecutamos la consulta SQL
+                        command.ExecuteNonQuery()
                     End Using
 
-                    MsgBox("Los datos del estudiante se actualizaron correctamente.", vbInformation)
+                    MsgBox("Los datos se actualizaron correctamente.", vbInformation)
 
+                    ' Cambiamos la leyenda de los botones
                     btnEditar.Text = "Editar"
+                    btnBuscar.Text = "Buscar"
+                    ' Activamos/Desactivamos botones según el caso
+                    btnEditar.Enabled = False
+                    btnNuevo.Enabled = True
+                    btnEliminar.Enabled = False
 
-                    ' Bloquar todos los TextBox  
-                    For Each campo As TextBox In campos
-                        campo.Enabled = False
-                    Next
-                    Vaciar()
+                    InhabilitarTodo()
+
+                    VaciarTodo()
+
                 Catch ex As Exception
                     MsgBox("Error al actualizar los datos del estudiante: " & ex.Message, vbCritical)
                 End Try
@@ -138,105 +147,66 @@ Public Class frmCargaDatos
         End Using
     End Sub
 
-    Private Sub Vaciar()
-        For Each campo As TextBox In campos
-            campo.Text = ""
-        Next
-    End Sub
 
-    Private Sub txtBxNombres_TextChanged(sender As Object, e As EventArgs) Handles txtBxNombres.TextChanged
-        ' Ruta de la base de datos de Access
-        Dim con As String = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
+    Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
+        ' Cambiamos la leyenda del botón
+        If btnBuscar.Text = "Buscar" Then
+            ' Activamos/Desactivamos botones según el caso
+            btnNuevo.Enabled = False
+            btnEditar.Enabled = True
 
-        ' Verificar si el cuadro de texto está vacío
-        If txtBxNombres.Text = "" Then
-            ' Ocultamos el ListView
-            lstVwEstu.Visible = False
-        Else
+            ' Cargamos el contenido del TextBox para realizar la búsqueda por número de documento
+            Dim dni As String = txtBxDni.Text
+
             Try
-                ' Abrir la conexión a la base de datos utilizando la instrucción Using
-                Using connDB As New OleDbConnection(con)
-                    connDB.Open()
-                    ' Consulta SQL para seleccionar solo el campo nomb_estu que comienza con el texto ingresado
-                    Dim cmd As String = "SELECT nomb_estu FROM Estudiantes WHERE nomb_estu LIKE @NombreEstudiante"
-                    ' Crear un adaptador de datos para ejecutar la consulta
-                    Using oDataAdapter As New OleDbDataAdapter(cmd, connDB)
-                        ' Asignar el valor del parámetro @NombreEstudiante
-                        oDataAdapter.SelectCommand.Parameters.AddWithValue("@NombreEstudiante", txtBxNombres.Text & "%")
-                        ' Crear un DataSet para almacenar los resultados de la consulta
-                        Dim oDataSet As New DataSet()
-                        ' Llenar el DataSet con los resultados de la consulta
-                        oDataAdapter.Fill(oDataSet, "Estudiantes")
+                Using connection As New OleDbConnection(connectionString)
+                    connection.Open()
 
-                        ' Verificar si se obtuvieron resultados
-                        If oDataSet.Tables("Estudiantes").Rows.Count() <> 0 Then
-                            ' Mostrar el ListView
-                            lstVwEstu.Visible = True
-                            ' Limpiar los elementos anteriores del ListView
-                            lstVwEstu.Items.Clear()
+                    ' Consulta SQL para obtener los datos del estudiante por su DNI
+                    Dim sqlQuery As String = "SELECT nomb_estu, apell_estu, fecha_nac_estu, nro_tel_estu, email_estu, calle_estu, altura_calle_estu, id_curso
+                                              FROM Estudiantes WHERE dni_estu = @Dni"
 
-                            ' Agregar cada resultado al ListView
-                            For Each fila As DataRow In oDataSet.Tables("Estudiantes").Rows
-                                lstVwEstu.Items.Add(fila("nomb_estu"))
-                            Next
+                    Using command As New OleDbCommand(sqlQuery, connection)
+                        command.Parameters.AddWithValue("@Dni", dni)
+
+                        ' Crear un adaptador de datos y un DataTable
+                        Dim adapter As New OleDbDataAdapter(command)
+                        Dim dataTable As New DataTable()
+
+                        ' Llenar el DataTable con los resultados de la consulta
+                        adapter.Fill(dataTable)
+
+                        ' Verificar si se encontraron datos. Se cuenta si hay filas, de haber significa que se encontraron resultados
+                        If dataTable.Rows.Count > 0 Then
+                            ' Asignar los valores a los TextBox correspondientes
+                            Dim row As DataRow = dataTable.Rows(0)
+                            txtBxNombres.Text = row("nomb_estu").ToString()
+                            txtBxApellido.Text = row("apell_estu").ToString()
+                            txtBxFechaNac.Text = Convert.ToDateTime(row("fecha_nac_estu")).ToShortDateString()
+                            txtBxTelefono.Text = row("nro_tel_estu").ToString()
+                            txtBxCorreo.Text = row("email_estu").ToString()
+                            txtBxCalle.Text = row("calle_estu").ToString()
+                            txtBxAltura.Text = row("altura_calle_estu").ToString()
+                            cmbBxCargaCurso.SelectedIndex = row("id_curso").ToString()
+
                         Else
-                            ' Ocultar el ListView si no hay resultados
-                            lstVwEstu.Visible = False
+                            MsgBox("No se encontraron datos para el DNI proporcionado.")
                         End If
                     End Using
                 End Using
-            Catch ea As Exception
-                ' Mostrar mensaje de error si ocurre una excepción
-                MsgBox(ea.Message)
-            End Try
-        End If
-    End Sub
 
-    Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
-        If btnBuscar.Text = "Buscar" Then
-            btnNuevo.Enabled = False
-            btnEditar.Enabled = True
-            ' Cargamos el contenido del TextBox para realizar la búsqueda por número de documento
-            Dim dni As String = txtBxDni.Text
-            Try
-                Dim con As String = "Provider=Microsoft.ACE.OLEDB.16.0; Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
-
-                Using connDB As New OleDbConnection(con)
-                    connDB.Open()
-
-                    ' Consulta SQL para obtener los datos del estudiante por su DNI
-                    Dim sqlQuery As String = "SELECT nomb_estu, apell_estu, fecha_nac_estu, nro_tel_estu, email_estu, calle_estu, altura_calle_estu
-                                        FROM Estudiantes WHERE dni_estu = @Dni"
-
-                    Using command As New OleDbCommand(sqlQuery, connDB)
-                        command.Parameters.AddWithValue("@Dni", dni)
-
-                        Using reader As OleDbDataReader = command.ExecuteReader()
-                            If reader.Read() Then
-                                ' Asignar los valores a los TextBox correspondientes
-                                txtBxNombres.Text = reader("nomb_estu").ToString()
-                                txtBxApellido.Text = reader("apell_estu").ToString()
-                                ' Usamos ToShortDateString para obtener solo la fecha en formato de cadena corta
-                                txtBxFechaNac.Text = reader("fecha_nac_estu").ToShortDateString()
-                                txtBxTelefono.Text = reader("nro_tel_estu").ToString()
-                                txtBxCorreo.Text = reader("email_estu").ToString()
-                                txtBxCalle.Text = reader("calle_estu").ToString()
-                                txtBxAltura.Text = reader("altura_calle_estu").ToString()
-                            Else
-                                MsgBox("No se encontraron datos para el DNI proporcionado.")
-                            End If
-                        End Using
-                    End Using
-                End Using
             Catch ex As Exception
                 MsgBox("Error al obtener datos del estudiante: " & ex.Message)
             End Try
-
+            ' Cambaimos la leyenda del botón
             btnBuscar.Text = "Limpiar"
+            ' Activamos/Desactivamos botones según el caso
             btnEliminar.Enabled = True
         Else
-            Vaciar()
+            VaciarTodo()
+            ' Cambaimos la leyenda del botón
             btnBuscar.Text = "Buscar"
+            ' Activamos/Desactivamos botones según el caso
             btnEditar.Enabled = False
             btnEliminar.Enabled = False
         End If
@@ -245,63 +215,143 @@ Public Class frmCargaDatos
 
     Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
 
-        ' Configuración de la cadena de conexión
-        Dim connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0; Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
+        Using connection As New OleDbConnection(connectionString)
+            connection.Open()
 
-        Using connDB As New OleDbConnection(connectionString)
-            connDB.Open()
-
-            ' Habilitar todos los TextBox  
-            For Each campo As TextBox In campos
-                    campo.Enabled = True
-                Next
+            HabilitarTodo()
 
             Try
-                    ' Realizar la eliminación
-                    Dim sqlQuery As String = "DELETE FROM Estudiantes WHERE dni_estu = @Dni"
-                    Using comd As New OleDbCommand(sqlQuery, connDB)
-                        ' Asignar parámetro para la eliminación
-                        comd.Parameters.AddWithValue("@Dni", txtBxDni.Text)
+                ' Consulta para realizar la eliminación
+                Dim sqlQuery As String = "DELETE FROM Estudiantes WHERE dni_estu = @Dni"
 
-                        comd.ExecuteNonQuery()
-                    End Using
+                Using command As New OleDbCommand(sqlQuery, connection)
+                    ' Asignar parámetro para la eliminación
+                    command.Parameters.AddWithValue("@Dni", txtBxDni.Text)
+                    ' Ejecutamos la consulta SQL
+                    command.ExecuteNonQuery()
+                End Using
 
-                    MsgBox("El estudiante se eliminó correctamente.", vbInformation)
+                MsgBox("El estudiante se eliminó correctamente.", vbInformation)
 
                 ' Deshabilitar todos los TextBox y vaciarlos
-                For Each campo As TextBox In campos
-                        campo.Enabled = False
-                        campo.Text = ""
-                    Next
-                Catch ex As Exception
-                    MsgBox("Error al eliminar al estudiante: " & ex.Message, vbCritical)
-                End Try
+                InhabilitarTodo()
+                VaciarTodo()
+
+            Catch ex As Exception
+                MsgBox("Error al eliminar al estudiante: " & ex.Message, vbCritical)
+            End Try
 
         End Using
     End Sub
 
+
+    '************- PROCEDIMIENTOS PARA VACIAR, HABILITAR E INHABILITAR TEXTBOX Y COMBOBOX-*****************
+    Private Sub VaciarTodo()
+        'Vaciar todos los TextBox
+        For Each campo As TextBox In campos
+            campo.Text = ""
+        Next
+
+        ' Se vacía el DataSource para poder limpiar el ComboBox
+        cmbBxCargaCurso.DataSource = Nothing
+        ' Se vacia el ComboBox
+        cmbBxCargaCurso.Items.Clear()
+    End Sub
+
+    Private Sub HabilitarTodo()
+        ' Habilitar todos los TextBox  
+        For Each campo As TextBox In campos
+            campo.Enabled = True
+        Next
+
+        ' Habilitar el ComboBox
+        cmbBxCargaCurso.Enabled = True
+
+        ' Llamamos al procedimiento para cargar la lista de cursos
+        modCursos.CargarCursos(cmbBxCargaCurso)
+    End Sub
+
+    Private Sub InhabilitarTodo()
+        ' Bloquar todos los TextBox  
+        For Each campo As TextBox In campos
+            campo.Enabled = False
+        Next
+
+        ' Se vacía el DataSource para poder limpiar el ComboBox
+        cmbBxCargaCurso.DataSource = Nothing
+        ' Se vacia el ComboBox
+        cmbBxCargaCurso.Items.Clear()
+        ' Bloquear el ComboBox
+        cmbBxCargaCurso.Enabled = False
+
+    End Sub
+    '****************************************************************************************************
+
+
+    Private Sub txtBxNombres_TextChanged(sender As Object, e As EventArgs) Handles txtBxNombres.TextChanged
+        busquedaPredictiva()
+    End Sub
+
+
+
+    '*******************************- COMPORTAMIENTO DEL BOTÓN SALIR -*******************************
+    Private Sub btnSalirCargaDatos_Click(sender As Object, e As EventArgs) Handles btnSalirCargaDatos.Click
+        ' Cierra la aplicación, finaliza todos los formularios y termina el proceso de la aplicación.
+        Application.Exit()
+    End Sub
+
+    Private Sub btnSalirCargaDatos_MouseHover(sender As Object, e As EventArgs) Handles btnSalirCargaDatos.MouseHover
+        ' Este evento se desencadena cuando el mouse entra en el área del botón
+        ' Cambia la imagen de fondo del botón cuando el mouse está sobre él
+        btnSalirCargaDatos.BackgroundImage = My.Resources.apagarR_small
+    End Sub
+
+    Private Sub btnSalirCargaDatos_MouseLeave(sender As Object, e As EventArgs) Handles btnSalirCargaDatos.MouseLeave
+        ' Este evento se desencadena cuando el mouse sale del área del botón
+        ' Restaura la imagen de fondo original del botón cuando el mouse sale de él
+        btnSalirCargaDatos.BackgroundImage = My.Resources.apagarN_small
+    End Sub
+
+    '*************************************************************************************************
+
+
+    '********************- COMPORTAMIENTO DE LOS CAMPOS PARA VALIDAR LAS ENTRADAS -********************
+    Private Sub txtBxNombres_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtBxNombres.KeyPress
+        ' Se llama al procedimiento que validará la entrada. Se envía la variable "e" que contiene el evento
+        modValidaciones.soloLetras(e)
+    End Sub
+
+    Private Sub txtBxApellido_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtBxApellido.KeyPress
+        ' Se llama al procedimiento que validará la entrada. Se envía la variable "e" que contiene el evento
+        modValidaciones.soloLetras(e)
+    End Sub
+
+    Private Sub txtBxFechaNac_Leave(sender As Object, e As EventArgs) Handles txtBxFechaNac.Leave
+        ' El evento Leave se produce cuando el objeto pierde el foco
+        ' Se llama al procedimiento que validará la entrada. Se envía el TextBox para analizar su contenido
+        modValidaciones.soloFecha(txtBxFechaNac)
+    End Sub
+
+    Private Sub txtBxDni_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtBxDni.KeyPress
+        ' Se llama al procedimiento que validará la entrada. Se envía la variable "e" que contiene el evento
+        modValidaciones.soloNumeros(e)
+    End Sub
+
+    Private Sub txtBxAltura_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtBxAltura.KeyPress
+        ' Se llama al procedimiento que validará la entrada. Se envía la variable "e" que contiene el evento
+        modValidaciones.soloNumeros(e)
+    End Sub
+
+    Private Sub txtBxTelefono_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtBxTelefono.KeyPress
+        ' Se llama al procedimiento que validará la entrada. Se envía la variable "e" que contiene el evento
+        modValidaciones.soloNumeros(e)
+    End Sub
+
+    Private Sub txtBxCorreo_Leave(sender As Object, e As EventArgs) Handles txtBxCorreo.Leave
+        ' El evento Leave se produce cuando el objeto pierde el foco
+        ' Se llama al procedimiento que validará la entrada. Se envía el TextBox para analizar su contenido
+        modValidaciones.soloMail(txtBxCorreo)
+    End Sub
+    '*************************************************************************************************
 End Class
 
-
-'*************************************************************************
-'ESTE CÓDIGO ES UNA FUNCIÓN SIMPLIFICADA PARA VALIDAR CAMPOS
-'If campos.Any(Function(txbx) String.IsNullOrEmpty(txbx.Text)) Then
-'    MsgBox("Hay campos vacíos")
-'    Return
-'End If
-
-'ESTE SERÍA EL CÓDIGO NORMAL EQUIVALENTE A LA FUNCIÓN DE ARRIBA
-'If HayCamposVacios(campos) Then
-'    MsgBox("Hay campos vacíos")
-'    Return
-'End If
-
-'Function HayCamposVacios(textBoxes() As TextBox) As Boolean
-'    For Each txbx As TextBox In textBoxes
-'        If String.IsNullOrEmpty(txbx.Text) Then
-'            Return True ' Hay un campo vacío, retorna True
-'        End If
-'    Next
-'    Return False ' No hay campos vacíos, retorna False
-'End Function
-'***************************************************************************
