@@ -23,6 +23,9 @@ Public Class frmCargaDatos
             ' Habilitamos todos los TextBox y el ComboBox
             HabilitarTodo()
 
+            ' Llamamos al procedimiento para cargar la lista de cursos
+            modCursos.CargarCursos(cmbBxCargaCurso)
+
             ' Activamos/Desactivamos botones según el caso
             btnGuardarDatos.Enabled = True
             btnBuscar.Enabled = False
@@ -104,6 +107,7 @@ Public Class frmCargaDatos
                 btnEditar.Text = "Actualizar"
 
                 HabilitarTodo()
+
             Else
                 Try
                     ' Preparamos la consulta para la actualización
@@ -187,6 +191,9 @@ Public Class frmCargaDatos
                             txtBxCorreo.Text = row("email_estu").ToString()
                             txtBxCalle.Text = row("calle_estu").ToString()
                             txtBxAltura.Text = row("altura_calle_estu").ToString()
+                            ' Llamamos al procedimiento para cargar la lista de cursos
+                            modCursos.CargarCursos(cmbBxCargaCurso)
+                            ' Tomamos el valor de id_curso para que el ComboBox muestre el curso correspodiente
                             cmbBxCargaCurso.SelectedIndex = row("id_curso").ToString()
 
                         Else
@@ -198,17 +205,25 @@ Public Class frmCargaDatos
             Catch ex As Exception
                 MsgBox("Error al obtener datos del estudiante: " & ex.Message)
             End Try
+
             ' Cambaimos la leyenda del botón
             btnBuscar.Text = "Limpiar"
+
             ' Activamos/Desactivamos botones según el caso
             btnEliminar.Enabled = True
+
         Else
+
             VaciarTodo()
+
             ' Cambaimos la leyenda del botón
             btnBuscar.Text = "Buscar"
+
             ' Activamos/Desactivamos botones según el caso
             btnEditar.Enabled = False
             btnEliminar.Enabled = False
+            btnNuevo.Enabled = True
+
         End If
 
     End Sub
@@ -217,8 +232,6 @@ Public Class frmCargaDatos
 
         Using connection As New OleDbConnection(connectionString)
             connection.Open()
-
-            HabilitarTodo()
 
             Try
                 ' Consulta para realizar la eliminación
@@ -236,6 +249,14 @@ Public Class frmCargaDatos
                 ' Deshabilitar todos los TextBox y vaciarlos
                 InhabilitarTodo()
                 VaciarTodo()
+
+                ' Activamos/Desactivamos botones según el caso
+                btnNuevo.Enabled = True
+                btnEditar.Enabled = False
+                btnEliminar.Enabled = False
+
+                ' Cambiamos la leyenda del botón
+                btnBuscar.Text = "Buscar"
 
             Catch ex As Exception
                 MsgBox("Error al eliminar al estudiante: " & ex.Message, vbCritical)
@@ -267,8 +288,6 @@ Public Class frmCargaDatos
         ' Habilitar el ComboBox
         cmbBxCargaCurso.Enabled = True
 
-        ' Llamamos al procedimiento para cargar la lista de cursos
-        modCursos.CargarCursos(cmbBxCargaCurso)
     End Sub
 
     Private Sub InhabilitarTodo()

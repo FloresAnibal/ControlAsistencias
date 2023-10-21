@@ -2,7 +2,8 @@
 Public Class frmCargaAsis
 
     ' La cadena de conexión a la base de datos de Access
-    Private connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source= E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
+    Private connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0;
+                                          Data Source= E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
 
     Private Sub frmCargaAsistencias_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Al cargarse el formularios se cargan los cursos en el ComboBox desde la base de datos

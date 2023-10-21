@@ -3,10 +3,13 @@
 Module modCursos
 
     ' Define la cadena de conexión en el módulo
-    Private connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0; Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
+    Private connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0; 
+                                          Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
 
     ' Este procedimiento recibe un ComboBox
     Public Sub CargarCursos(ByRef cmbBox As ComboBox)
+        ' Se vacía el DataSource para poder limpiar el ComboBox
+        cmbBox.DataSource = Nothing
         ' Limpiar el ComboBox
         cmbBox.Items.Clear()
 
