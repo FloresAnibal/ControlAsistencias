@@ -13,5 +13,8 @@
     <Compile Update="FormCargaDatos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="FormPrece.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

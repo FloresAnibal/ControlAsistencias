@@ -34,3 +34,4 @@ E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\o
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.vbproj.CopyComplete
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmCargaAsis.resources
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmAsistenciaEstu.resources
+E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmPrece.resources

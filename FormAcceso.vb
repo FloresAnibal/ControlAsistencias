@@ -67,7 +67,7 @@ Public Class frmAcceso
                                 frmAsistenciaEstu.Show()
                             Else
                                 ' Se muestra el Formulario correspondiente
-                                frmCargaAsis.Show()
+                                frmPrece.Show()
                             End If
 
                         Else

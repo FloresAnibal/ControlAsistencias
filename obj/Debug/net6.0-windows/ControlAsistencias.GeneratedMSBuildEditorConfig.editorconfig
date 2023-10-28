@@ -1,6 +1,6 @@
 is_global = true
 build_property.ApplicationManifest = 
-build_property.StartupObject = ControlAsistencias.frmCargaDatos
+build_property.StartupObject = ControlAsistencias.frmAcceso
 build_property.ApplicationDefaultFont = 
 build_property.ApplicationHighDpiMode = 
 build_property.ApplicationUseCompatibleTextRendering = 
