@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\ISES\\Programación Visual\\Visual Studio\\ProyectosControlAsistencias - copia\\ControlAsistencias.vbproj": {}
+    "E:\\ISES\\Programación Visual\\Visual Studio\\ControlAsistencias-main\\ControlAsistencias.vbproj": {}
   },
   "projects": {
-    "E:\\ISES\\Programación Visual\\Visual Studio\\ProyectosControlAsistencias - copia\\ControlAsistencias.vbproj": {
+    "E:\\ISES\\Programación Visual\\Visual Studio\\ControlAsistencias-main\\ControlAsistencias.vbproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\ISES\\Programación Visual\\Visual Studio\\ProyectosControlAsistencias - copia\\ControlAsistencias.vbproj",
+        "projectUniqueName": "E:\\ISES\\Programación Visual\\Visual Studio\\ControlAsistencias-main\\ControlAsistencias.vbproj",
         "projectName": "ControlAsistencias",
-        "projectPath": "E:\\ISES\\Programación Visual\\Visual Studio\\ProyectosControlAsistencias - copia\\ControlAsistencias.vbproj",
+        "projectPath": "E:\\ISES\\Programación Visual\\Visual Studio\\ControlAsistencias-main\\ControlAsistencias.vbproj",
         "packagesPath": "C:\\Users\\Aníbal\\.nuget\\packages\\",
-        "outputPath": "E:\\ISES\\Programación Visual\\Visual Studio\\ProyectosControlAsistencias - copia\\obj\\",
+        "outputPath": "E:\\ISES\\Programación Visual\\Visual Studio\\ControlAsistencias-main\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

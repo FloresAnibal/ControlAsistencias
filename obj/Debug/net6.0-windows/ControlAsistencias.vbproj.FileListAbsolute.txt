@@ -35,3 +35,40 @@ E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\o
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmCargaAsis.resources
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmAsistenciaEstu.resources
 E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\obj\Debug\net6.0-windows\ControlAsistencias.frmPrece.resources
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\ControlAsistencias.exe
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\ControlAsistencias.deps.json
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\ControlAsistencias.runtimeconfig.json
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\ControlAsistencias.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\ControlAsistencias.pdb
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\Microsoft.Win32.SystemEvents.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\System.Configuration.ConfigurationManager.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\System.Data.OleDb.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\System.Diagnostics.PerformanceCounter.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\System.Drawing.Common.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\System.Security.Cryptography.ProtectedData.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\System.Security.Permissions.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\System.Windows.Extensions.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Data.OleDb.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Diagnostics.PerformanceCounter.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\bin\Debug\net6.0-windows\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.vbproj.AssemblyReference.cache
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.frmAcceso.resources
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.frmAsistenciaEstu.resources
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.frmCargaAsis.resources
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.frmCargaDatos.resources
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.frmPrece.resources
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.Resources.resources
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.vbproj.GenerateResource.cache
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.GeneratedMSBuildEditorConfig.editorconfig
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.AssemblyInfoInputs.cache
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.AssemblyInfo.vb
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.vbproj.CoreCompileInputs.cache
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.vbproj.CopyComplete
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\refint\ControlAsistencias.dll
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.pdb
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ControlAsistencias.genruntimeconfig.cache
+E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\obj\Debug\net6.0-windows\ref\ControlAsistencias.dll

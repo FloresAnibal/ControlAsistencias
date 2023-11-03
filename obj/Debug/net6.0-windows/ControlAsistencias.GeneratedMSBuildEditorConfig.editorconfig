@@ -1,6 +1,6 @@
 is_global = true
 build_property.ApplicationManifest = 
-build_property.StartupObject = ControlAsistencias.frmAcceso
+build_property.StartupObject = ControlAsistencias.frmCargaDatos
 build_property.ApplicationDefaultFont = 
 build_property.ApplicationHighDpiMode = 
 build_property.ApplicationUseCompatibleTextRendering = 
@@ -14,4 +14,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ControlAsistencias
-build_property.ProjectDir = E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\
+build_property.ProjectDir = E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\

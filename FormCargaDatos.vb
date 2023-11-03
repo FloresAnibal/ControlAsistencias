@@ -1,4 +1,5 @@
 ﻿Imports System.Data.OleDb
+Imports System.Drawing.Printing
 
 Public Class frmCargaDatos
 
@@ -372,5 +373,78 @@ Public Class frmCargaDatos
         modValidaciones.soloMail(txtBxCorreo)
     End Sub
     '*************************************************************************************************
+
+
+    '000000000000000000000000000000000000- IMPRESIÓN -000000000000000000000000000000000000000000000000
+
+    Private Sub btnImprimirAlum_Click(sender As Object, e As EventArgs) Handles btnImprimirAlum.Click
+        ' Configuración de la impresión
+        Dim printDocument As New PrintDocument()
+
+        ' Manejar el evento PrintPage para realizar la impresión
+        AddHandler printDocument.PrintPage, AddressOf ImprimirContenido
+
+
+        ' Mostrar el cuadro de diálogo de impresión
+        Dim printDialog As New PrintDialog()
+        printDialog.Document = printDocument
+
+        If printDialog.ShowDialog() = DialogResult.OK Then
+            printDocument.Print()
+        End If
+    End Sub
+
+
+
+
+
+    Private Sub ImprimirContenido(sender As Object, e As PrintPageEventArgs)
+        ' Definir las fuentes y pinceles
+        Dim fontTitulo As New Font("Arial", 14, FontStyle.Bold)
+        Dim fontEncabezado As New Font("Arial", 12, FontStyle.Bold)
+        Dim fontContenido As New Font("Arial", 9, FontStyle.Regular)
+        Dim brushNegro As New SolidBrush(Color.Black)
+
+        ' Posiciones iniciales
+        Dim y As Single = e.MarginBounds.Top
+        Dim xTitulo As Single = e.MarginBounds.Left + 100
+        Dim xContenido As Single = e.MarginBounds.Left
+
+        ' Título
+        e.Graphics.DrawString("Información del Estudiante", fontTitulo, brushNegro, xTitulo, y)
+        y += fontTitulo.GetHeight()
+
+        ' Contenido de TextBox
+        e.Graphics.DrawString("Nombres: " & txtBxNombres.Text, fontEncabezado, brushNegro, xContenido, y)
+        y += fontEncabezado.GetHeight()
+
+        e.Graphics.DrawString("Apellido: " & txtBxApellido.Text, fontEncabezado, brushNegro, xContenido, y)
+        y += fontEncabezado.GetHeight()
+
+        e.Graphics.DrawString("Fecha de Nacimiento: " & txtBxFechaNac.Text, fontEncabezado, brushNegro, xContenido, y)
+        y += fontEncabezado.GetHeight()
+
+        e.Graphics.DrawString("DNI: " & txtBxDni.Text, fontEncabezado, brushNegro, xContenido, y)
+        y += fontEncabezado.GetHeight()
+
+        e.Graphics.DrawString("Teléfono: " & txtBxTelefono.Text, fontEncabezado, brushNegro, xContenido, y)
+        y += fontEncabezado.GetHeight()
+
+        e.Graphics.DrawString("E-mail: " & txtBxCorreo.Text, fontEncabezado, brushNegro, xContenido, y)
+        y += fontEncabezado.GetHeight()
+
+        e.Graphics.DrawString("Dirección: " & txtBxCalle.Text & " N° " & txtBxAltura.Text, fontEncabezado, brushNegro, xContenido, y)
+        y += fontEncabezado.GetHeight()
+
+
+        ' Manejar salto de página si es necesario
+        If y + fontContenido.GetHeight() > e.MarginBounds.Bottom Then
+            e.HasMorePages = True
+        Else
+            e.HasMorePages = False
+        End If
+    End Sub
+
+    '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 End Class
 

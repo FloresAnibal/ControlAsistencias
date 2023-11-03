@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EHRivAei7QJKe7KRXL7Ego55Gpime4lofnt+9d78NhjK+U6g9zl31nxld8hRaVQa61rs+VwDvB2yR03/FpSXfg==",
+  "dgSpecHash": "7RX5k9JYe66lufSIP4AeZMBJdRD+81VgKd4iSCe1g4036TX1MipYVGVVVNiaXymQkp5vbaB+RJQpt1CmR40fQw==",
   "success": true,
-  "projectFilePath": "E:\\ISES\\Programación Visual\\Visual Studio\\ProyectosControlAsistencias - copia\\ControlAsistencias.vbproj",
+  "projectFilePath": "E:\\ISES\\Programación Visual\\Visual Studio\\ControlAsistencias-main\\ControlAsistencias.vbproj",
   "expectedPackageFiles": [
     "C:\\Users\\Aníbal\\.nuget\\packages\\microsoft.win32.systemevents\\7.0.0\\microsoft.win32.systemevents.7.0.0.nupkg.sha512",
     "C:\\Users\\Aníbal\\.nuget\\packages\\system.configuration.configurationmanager\\7.0.0\\system.configuration.configurationmanager.7.0.0.nupkg.sha512",
