@@ -1,19 +1,21 @@
-﻿Imports System.Data.OleDb
-Imports System.Drawing.Printing
+﻿' Librerías importadas
+
+Imports System.Data.OleDb   'Para acceder a bases de datos a través de OLE DB
+Imports System.Drawing.Printing ' Para administrar tareas relacionadas con la impresión en aplicaciones
 
 Public Class frmCargaDatos
 
-    ' Array de tipo TextBox
+    ' Declaramos una matriz de tipo TextBox
     Dim campos() As TextBox
 
     Private Sub frmCargaDatos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Carga del array con todos los TextBox del formulario. Para facilitar las validaciones
+        ' Carga de la matriz con todos los TextBox del formulario. Para facilitar las validaciones
         campos = {txtBxNombres, txtBxApellido, txtBxDni, txtBxFechaNac, txtBxCorreo, txtBxTelefono, txtBxCalle, txtBxAltura}
     End Sub
 
     ' Configuración de la cadena de conexión
     Private connectionString As String = "Provider=Microsoft.ACE.OLEDB.16.0; 
-                                          Data Source=E:\ISES\Programación Visual\Visual Studio\ProyectosControlAsistencias - copia\Base de Datos\BaseDatosAsistencias.accdb"
+                                          Data Source=E:\ISES\Programación Visual\Visual Studio\ControlAsistencias-main\Base de Datos\BaseDatosAsistencias.accdb"
 
     Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click
 
@@ -24,7 +26,7 @@ Public Class frmCargaDatos
             ' Habilitamos todos los TextBox y el ComboBox
             HabilitarTodo()
 
-            ' Llamamos al procedimiento para cargar la lista de cursos
+            ' Llamamos al procedimiento dentro de un módulo para cargar la lista de cursos en el ComboBox
             modCursos.CargarCursos(cmbBxCargaCurso)
 
             ' Activamos/Desactivamos botones según el caso
@@ -54,13 +56,17 @@ Public Class frmCargaDatos
         If modValidaciones.camposLlenos(campos) = True And cmbBxCargaCurso.SelectedIndex > 0 Then
 
             Try
+                ' Creamos la variable que contendrá la consulta SQL que luego será ejecutada
                 Dim sqlQuery As String = "INSERT INTO Estudiantes (nomb_estu, apell_estu, dni_estu, fecha_nac_estu, nro_tel_estu, email_estu, calle_estu, altura_calle_estu, id_curso) 
                                           VALUES (@Nom, @Ape, @Dni, @Nac, @Tel, @Cor, @Cal, @Alt, @Cur)"
 
-                Using connection As New OleDbConnection(connectionString)
+                ' Crea una instancia de la clase OleDbConnection y la asignamos a la variable connection
+                Using connection As New OleDbConnection(connectionString)   ' Using se utiliza para garantizar que la conexión se abra y se cierre correctamente
 
+                    ' Abrir la conexión a la base de datos
                     connection.Open()
 
+                    'Preparación para ejecutar comandos SQL en una base de datos utilizando la conexión OleDbConnection especificada. 
                     Using command As New OleDbCommand(sqlQuery, connection)
                         ' Asignar parámetros
                         command.Parameters.AddWithValue("@Nom", txtBxNombres.Text)
@@ -72,12 +78,13 @@ Public Class frmCargaDatos
                         command.Parameters.AddWithValue("@Cal", txtBxCalle.Text)
                         command.Parameters.AddWithValue("@Alt", txtBxAltura.Text)
                         command.Parameters.AddWithValue("@Cur", cmbBxCargaCurso.SelectedIndex)
-                        ' Ejecutamos la consulta SQL
+                        ' ' Ejecutar la consulta SQL que puede ser una inserción, actualización o eliminación de datos en la base de datos
                         command.ExecuteNonQuery()
                     End Using
                 End Using
 
-                MsgBox("Los datos se registraron correctamente.", "Éxito")
+                ' Mensaje por pantalla
+                MsgBox("Los datos se registraron correctamente.")
 
                 ' Vaciar los TextBox llamando al procedimiento que lo hará
                 VaciarTodo()
@@ -93,7 +100,8 @@ Public Class frmCargaDatos
             End Try
 
         Else
-            MsgBox("No se permiten campos vacíos", "Aviso")
+            ' Mensaje por pantalla si el IF de mas a rriba no se cumple
+            MsgBox("No se permiten campos vacíos")
         End If
 
     End Sub
@@ -163,7 +171,9 @@ Public Class frmCargaDatos
             ' Cargamos el contenido del TextBox para realizar la búsqueda por número de documento
             Dim dni As String = txtBxDni.Text
 
-            Try
+
+            Try 'permite controlar lo que sucede cuando se produce un error en el código
+
                 Using connection As New OleDbConnection(connectionString)
                     connection.Open()
 
@@ -175,13 +185,13 @@ Public Class frmCargaDatos
                         command.Parameters.AddWithValue("@Dni", dni)
 
                         ' Crear un adaptador de datos y un DataTable
-                        Dim adapter As New OleDbDataAdapter(command)
-                        Dim dataTable As New DataTable()
+                        Dim adapter As New OleDbDataAdapter(command)    ' Actúa como intermediario entre la aplicación y la fuente de datos
+                        Dim dataTable As New DataTable()    ' Almacena y manipula datos de manera similar a una tabla de Ecxel. 
 
                         ' Llenar el DataTable con los resultados de la consulta
                         adapter.Fill(dataTable)
 
-                        ' Verificar si se encontraron datos. Se cuenta si hay filas, de haber significa que se encontraron resultados
+                        ' Verificar si se encontraron datos. Se cuenta si hay filas cargadas, de haber significa que se encontraron resultados
                         If dataTable.Rows.Count > 0 Then
                             ' Asignar los valores a los TextBox correspondientes
                             Dim row As DataRow = dataTable.Rows(0)
@@ -192,8 +202,10 @@ Public Class frmCargaDatos
                             txtBxCorreo.Text = row("email_estu").ToString()
                             txtBxCalle.Text = row("calle_estu").ToString()
                             txtBxAltura.Text = row("altura_calle_estu").ToString()
+
                             ' Llamamos al procedimiento para cargar la lista de cursos
                             modCursos.CargarCursos(cmbBxCargaCurso)
+
                             ' Tomamos el valor de id_curso para que el ComboBox muestre el curso correspodiente
                             cmbBxCargaCurso.SelectedIndex = row("id_curso").ToString()
 
@@ -245,7 +257,7 @@ Public Class frmCargaDatos
                     command.ExecuteNonQuery()
                 End Using
 
-                MsgBox("El estudiante se eliminó correctamente.", vbInformation)
+                MsgBox("El estudiante se eliminó correctamente.")
 
                 ' Deshabilitar todos los TextBox y vaciarlos
                 InhabilitarTodo()
@@ -260,7 +272,7 @@ Public Class frmCargaDatos
                 btnBuscar.Text = "Buscar"
 
             Catch ex As Exception
-                MsgBox("Error al eliminar al estudiante: " & ex.Message, vbCritical)
+                MsgBox("Error al eliminar al estudiante: " & ex.Message)
             End Try
 
         End Using
@@ -274,8 +286,9 @@ Public Class frmCargaDatos
             campo.Text = ""
         Next
 
-        ' Se vacía el DataSource para poder limpiar el ComboBox
+        ' Se vacía el elemento DataSource para poder limpiar el ComboBox
         cmbBxCargaCurso.DataSource = Nothing
+
         ' Se vacia el ComboBox
         cmbBxCargaCurso.Items.Clear()
     End Sub
@@ -297,35 +310,41 @@ Public Class frmCargaDatos
             campo.Enabled = False
         Next
 
-        ' Se vacía el DataSource para poder limpiar el ComboBox
+        ' Se vacía el elemento DataSource para poder limpiar el ComboBox
         cmbBxCargaCurso.DataSource = Nothing
+
         ' Se vacia el ComboBox
         cmbBxCargaCurso.Items.Clear()
+
         ' Bloquear el ComboBox
         cmbBxCargaCurso.Enabled = False
 
     End Sub
     '****************************************************************************************************
 
-
+    ' Evento que se activa cuando el contenido del TextBox cambia
     Private Sub txtBxNombres_TextChanged(sender As Object, e As EventArgs) Handles txtBxNombres.TextChanged
         busquedaPredictiva()
     End Sub
 
 
 
-    '*******************************- COMPORTAMIENTO DEL BOTÓN SALIR -*******************************
+    '*********************************- COMPORTAMIENTO DEL BOTÓN SALIR -*********************************
+
+    ' Evento que se activa cuando hacemos clic
     Private Sub btnSalirCargaDatos_Click(sender As Object, e As EventArgs) Handles btnSalirCargaDatos.Click
         ' Cierra la aplicación, finaliza todos los formularios y termina el proceso de la aplicación.
         Application.Exit()
     End Sub
 
+    ' Evento que se activa cuando el mouse está encima del objeto
     Private Sub btnSalirCargaDatos_MouseHover(sender As Object, e As EventArgs) Handles btnSalirCargaDatos.MouseHover
         ' Este evento se desencadena cuando el mouse entra en el área del botón
         ' Cambia la imagen de fondo del botón cuando el mouse está sobre él
         btnSalirCargaDatos.BackgroundImage = My.Resources.apagarR_small
     End Sub
 
+    ' Evento que se activa cuando el mouse no está encima del objeto
     Private Sub btnSalirCargaDatos_MouseLeave(sender As Object, e As EventArgs) Handles btnSalirCargaDatos.MouseLeave
         ' Este evento se desencadena cuando el mouse sale del área del botón
         ' Restaura la imagen de fondo original del botón cuando el mouse sale de él
@@ -336,6 +355,9 @@ Public Class frmCargaDatos
 
 
     '********************- COMPORTAMIENTO DE LOS CAMPOS PARA VALIDAR LAS ENTRADAS -********************
+    ' Todas las validaciones se encuentran en un módulo
+
+    ' Evento que se activa cuando presionamos una tecla dentro del objeto
     Private Sub txtBxNombres_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtBxNombres.KeyPress
         ' Se llama al procedimiento que validará la entrada. Se envía la variable "e" que contiene el evento
         modValidaciones.soloLetras(e)
@@ -347,7 +369,6 @@ Public Class frmCargaDatos
     End Sub
 
     Private Sub txtBxFechaNac_Leave(sender As Object, e As EventArgs) Handles txtBxFechaNac.Leave
-        ' El evento Leave se produce cuando el objeto pierde el foco
         ' Se llama al procedimiento que validará la entrada. Se envía el TextBox para analizar su contenido
         modValidaciones.soloFecha(txtBxFechaNac)
     End Sub
@@ -375,28 +396,32 @@ Public Class frmCargaDatos
     '*************************************************************************************************
 
 
-    '000000000000000000000000000000000000- IMPRESIÓN -000000000000000000000000000000000000000000000000
+    '000000000000000000000000000000000000- IMPRESIÓN 1 Alumno -000000000000000000000000000000000000000000000000
 
     Private Sub btnImprimirAlum_Click(sender As Object, e As EventArgs) Handles btnImprimirAlum.Click
-        ' Configuración de la impresión
+        ' Crear un objeto PrintDocument para administrar la impresión
         Dim printDocument As New PrintDocument()
 
-        ' Manejar el evento PrintPage para realizar la impresión
+        ' Agregar un manejador de evento para el evento PrintPage, que se ejecuta cuando se realiza la impresión
         AddHandler printDocument.PrintPage, AddressOf ImprimirContenido
 
+        ' Crear un cuadro de diálogo de vista previa de impresión
+        Dim printPreviewDialog As New PrintPreviewDialog()
+        ' Crear un cuadro de diálogo de impresión
+        Dim printdialog As New PrintDialog()
 
-        ' Mostrar el cuadro de diálogo de impresión
-        Dim printDialog As New PrintDialog()
-        printDialog.Document = printDocument
+        ' Asignar el objeto PrintDocument al cuadro de diálogo de vista previa
+        printPreviewDialog.Document = printDocument
 
-        If printDialog.ShowDialog() = DialogResult.OK Then
-            printDocument.Print()
+        ' Mostrar el cuadro de diálogo de vista previa de impresión y verificar si el usuario hizo clic en "OK"
+
+        ' Iniciar la impresión del documento
+        If printdialog.ShowDialog() = DialogResult.OK Then
+            If printPreviewDialog.ShowDialog() = DialogResult.OK Then
+                printDocument.Print()
+            End If
         End If
     End Sub
-
-
-
-
 
     Private Sub ImprimirContenido(sender As Object, e As PrintPageEventArgs)
         ' Definir las fuentes y pinceles
@@ -413,6 +438,8 @@ Public Class frmCargaDatos
         ' Título
         e.Graphics.DrawString("Información del Estudiante", fontTitulo, brushNegro, xTitulo, y)
         y += fontTitulo.GetHeight()
+
+        y += 20 ' Añade 20 unidades de espacio entre el título y el contenido
 
         ' Contenido de TextBox
         e.Graphics.DrawString("Nombres: " & txtBxNombres.Text, fontEncabezado, brushNegro, xContenido, y)
@@ -445,6 +472,47 @@ Public Class frmCargaDatos
         End If
     End Sub
 
+
+
+
+
+
+
+
+
+
+
+    '000000000000000000000000000000000000- IMPRESIÓN Todo -000000000000000000000000000000000000000000000000
+    'Private Sub btnImprimirTodos_Click(sender As Object, e As EventArgs) Handles btnImprimirTodos.Click
+    '    ' Crear un objeto PrintDocument para administrar la impresión
+    '    Dim printDocument As New PrintDocument()
+
+    '    ' Agregar un manejador de evento para el evento PrintPage, que se ejecuta cuando se realiza la impresión
+    '    AddHandler printDocument.PrintPage, AddressOf ImprimirTodo
+
+    '    ' Crear un cuadro de diálogo de vista previa de impresión
+    '    Dim printPreviewDialog As New PrintPreviewDialog()
+    '    ' Crear un cuadro de diálogo de impresión
+    '    Dim printdialog As New PrintDialog()
+
+    '    ' Asignar el objeto PrintDocument al cuadro de diálogo de vista previa
+    '    printPreviewDialog.Document = printDocument
+
+    '    ' Mostrar el cuadro de diálogo de vista previa de impresión y verificar si el usuario hizo clic en "OK"
+
+    '    ' Iniciar la impresión del documento
+    '    If printdialog.ShowDialog() = DialogResult.OK Then
+    '        If printPreviewDialog.ShowDialog() = DialogResult.OK Then
+    '            printDocument.Print()
+    '        End If
+    '    End If
+    'End Sub
+
     '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+
+
+
+
 End Class
 

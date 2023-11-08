@@ -54,7 +54,6 @@ Partial Class frmCargaDatos
         btnImprimirTodos = New Button()
         PrintDoc = New Printing.PrintDocument()
         PrintPreviewDialog = New PrintPreviewDialog()
-        btnVistaPrevia = New Button()
         SuspendLayout()
         ' 
         ' lblNombres
@@ -340,15 +339,6 @@ Partial Class frmCargaDatos
         PrintPreviewDialog.Name = "PrintPreviewDialog"
         PrintPreviewDialog.Visible = False
         ' 
-        ' btnVistaPrevia
-        ' 
-        btnVistaPrevia.Location = New Point(462, 572)
-        btnVistaPrevia.Name = "btnVistaPrevia"
-        btnVistaPrevia.Size = New Size(94, 29)
-        btnVistaPrevia.TabIndex = 30
-        btnVistaPrevia.Text = "Vista"
-        btnVistaPrevia.UseVisualStyleBackColor = True
-        ' 
         ' frmCargaDatos
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
@@ -356,7 +346,6 @@ Partial Class frmCargaDatos
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
         BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(672, 714)
-        Controls.Add(btnVistaPrevia)
         Controls.Add(btnImprimirTodos)
         Controls.Add(btnImprimirAlum)
         Controls.Add(cmbBxCargaCurso)
@@ -425,5 +414,4 @@ Partial Class frmCargaDatos
     Friend WithEvents btnImprimirTodos As Button
     Friend WithEvents PrintDoc As Printing.PrintDocument
     Friend WithEvents PrintPreviewDialog As PrintPreviewDialog
-    Friend WithEvents btnVistaPrevia As Button
 End Class
