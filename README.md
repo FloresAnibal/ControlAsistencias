@@ -1,0 +1,3 @@
+# ControlAsistencias
+
+En el marco de la carrera de Profesorado de Educación Secundaria en Informática del Instituto Superior Espíritu Santo, los alumnos Agustina Barrios y Aníbal Flores, bajo la tutela de Marina Welchen y en colaboración con la profesora Karina Szworak, desarrollaremos una aplicación de escritorio para el control de asistencia escolar. Nuestro objetivo principal es proporcionar a los docentes una herramienta eficiente y fácil de usar que les permita registrar y hacer seguimiento de la asistencia de los alumnos. El software se desarrollará utilizando Visual Studio Community como entorno de desarrollo, Visual Basic .NET como lenguaje de programación y Microsoft Access como base de datos, y estará destinado al sistema operativo Windows.

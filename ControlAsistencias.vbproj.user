@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="FormAcceso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormAsistenciaEstudiante.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormCargaAsistencias.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormCargaDatos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormPrece.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>
