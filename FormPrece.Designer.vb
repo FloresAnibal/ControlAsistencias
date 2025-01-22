@@ -26,6 +26,7 @@ Partial Class frmPrece
         btnAsitencias = New Button()
         btnSalirPrece = New Button()
         btnRegistros = New Button()
+        btnInicio = New Button()
         SuspendLayout()
         ' 
         ' btnAsitencias
@@ -65,6 +66,23 @@ Partial Class frmPrece
         btnRegistros.Text = "Carga de Alumnos"
         btnRegistros.UseVisualStyleBackColor = True
         ' 
+        ' btnInicio
+        ' 
+        btnInicio.Anchor = AnchorStyles.None
+        btnInicio.BackColor = Color.Transparent
+        btnInicio.BackgroundImage = My.Resources.Resources.homeN_small
+        btnInicio.BackgroundImageLayout = ImageLayout.Zoom
+        btnInicio.FlatAppearance.BorderSize = 0
+        btnInicio.FlatAppearance.MouseDownBackColor = Color.Transparent
+        btnInicio.FlatAppearance.MouseOverBackColor = Color.Transparent
+        btnInicio.FlatStyle = FlatStyle.Flat
+        btnInicio.Font = New Font("Calibri", 12F, FontStyle.Italic, GraphicsUnit.Point)
+        btnInicio.Location = New Point(12, 7)
+        btnInicio.Name = "btnInicio"
+        btnInicio.Size = New Size(38, 40)
+        btnInicio.TabIndex = 11
+        btnInicio.UseVisualStyleBackColor = False
+        ' 
         ' frmPrece
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
@@ -72,6 +90,7 @@ Partial Class frmPrece
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
         BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(388, 522)
+        Controls.Add(btnInicio)
         Controls.Add(btnRegistros)
         Controls.Add(btnSalirPrece)
         Controls.Add(btnAsitencias)
@@ -86,4 +105,5 @@ Partial Class frmPrece
     Friend WithEvents btnAsitencias As Button
     Friend WithEvents btnSalirPrece As Button
     Friend WithEvents btnRegistros As Button
+    Friend WithEvents btnInicio As Button
 End Class

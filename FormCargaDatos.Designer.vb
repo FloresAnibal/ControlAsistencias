@@ -51,6 +51,7 @@ Partial Class frmCargaDatos
         btnImprimirAlum = New Button()
         PrintDoc = New Printing.PrintDocument()
         PrintPreviewDialog = New PrintPreviewDialog()
+        btnInicio = New Button()
         SuspendLayout()
         ' 
         ' lblNombres
@@ -211,7 +212,7 @@ Partial Class frmCargaDatos
         lblCargaEstu.AutoSize = True
         lblCargaEstu.BackColor = Color.Transparent
         lblCargaEstu.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point)
-        lblCargaEstu.Location = New Point(33, 28)
+        lblCargaEstu.Location = New Point(33, 43)
         lblCargaEstu.Name = "lblCargaEstu"
         lblCargaEstu.Size = New Size(306, 41)
         lblCargaEstu.TabIndex = 19
@@ -313,6 +314,23 @@ Partial Class frmCargaDatos
         PrintPreviewDialog.Name = "PrintPreviewDialog"
         PrintPreviewDialog.Visible = False
         ' 
+        ' btnInicio
+        ' 
+        btnInicio.Anchor = AnchorStyles.None
+        btnInicio.BackColor = Color.Transparent
+        btnInicio.BackgroundImage = My.Resources.Resources.homeN_small
+        btnInicio.BackgroundImageLayout = ImageLayout.Zoom
+        btnInicio.FlatAppearance.BorderSize = 0
+        btnInicio.FlatAppearance.MouseDownBackColor = Color.Transparent
+        btnInicio.FlatAppearance.MouseOverBackColor = Color.Transparent
+        btnInicio.FlatStyle = FlatStyle.Flat
+        btnInicio.Font = New Font("Calibri", 12F, FontStyle.Italic, GraphicsUnit.Point)
+        btnInicio.Location = New Point(12, 7)
+        btnInicio.Name = "btnInicio"
+        btnInicio.Size = New Size(38, 40)
+        btnInicio.TabIndex = 29
+        btnInicio.UseVisualStyleBackColor = False
+        ' 
         ' frmCargaDatos
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
@@ -320,6 +338,7 @@ Partial Class frmCargaDatos
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
         BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(374, 701)
+        Controls.Add(btnInicio)
         Controls.Add(btnImprimirAlum)
         Controls.Add(cmbBxCargaCurso)
         Controls.Add(lblCurso)
@@ -383,4 +402,5 @@ Partial Class frmCargaDatos
     Friend WithEvents btnImprimirAlum As Button
     Friend WithEvents PrintDoc As Printing.PrintDocument
     Friend WithEvents PrintPreviewDialog As PrintPreviewDialog
+    Friend WithEvents btnInicio As Button
 End Class

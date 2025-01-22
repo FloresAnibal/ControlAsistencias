@@ -302,8 +302,71 @@ Public Class frmCargaDatos
         End Using
     End Sub
 
+    '**************- MODIFICACION PARA ELIMINAR ASISTENCIAS -**********************************************
+
+    'Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
+
+    '    Using connection As New OleDbConnection(connectionString)
+    '        connection.Open()
+
+    '        Try
+    '            ' Consulta para obtener el id_estu del estudiante
+    '            Dim sqlQueryIdEstu As String = "SELECT id_estu FROM Estudiantes WHERE dni = @Dni"
+
+    '            Using commandIdEstu As New OleDbCommand(sqlQueryIdEstu, connection)
+    '                commandIdEstu.Parameters.AddWithValue("@Dni", txtBxDni.Text)
+    '                Dim idEstu As Object = commandIdEstu.ExecuteScalar()
+
+    '                If Not IsDBNull(idEstu) Then
+    '                    ' Consulta para eliminar las asistencias del estudiante
+    '                    Dim sqlQueryAsistencia As String = "DELETE FROM ASISTENCIAS WHERE id_estu = @id_estu"
+
+    '                    Using commandAsistencia As New OleDbCommand(sqlQueryAsistencia, connection)
+    '                        commandAsistencia.Parameters.AddWithValue("@id_estu", idEstu)
+    '                        commandAsistencia.ExecuteNonQuery()
+    '                    End Using
+
+    '                    ' Consulta para realizar la eliminación del estudiante
+    '                    Dim sqlQueryEstudiante As String = "DELETE FROM Estudiantes WHERE dni = @Dni"
+
+    '                    Using commandEstudiante As New OleDbCommand(sqlQueryEstudiante, connection)
+    '                        commandEstudiante.Parameters.AddWithValue("@Dni", txtBxDni.Text)
+    '                        commandEstudiante.ExecuteNonQuery()
+    '                    End Using
+
+    '                    MsgBox("El estudiante y sus asistencias se eliminaron correctamente.")
+
+    '                Else
+    '                    MsgBox("No se encontró un estudiante con el DNI proporcionado.")
+    '                End If
+    '            End Using
+
+    '            ' Vaciar todos los campos
+    '            VaciarTodo()
+
+    '            ' Deshabilitar todos los TextBox y vaciarlos
+    '            InhabilitarTodo()
+
+    '            txtBxDni.Enabled = True
+
+    '            ' Activamos/Desactivamos botones según el caso
+    '            btnNuevo.Enabled = True
+    '            btnEditar.Enabled = False
+    '            btnEliminar.Enabled = False
+    '            btnImprimirAlum.Enabled = False
+
+    '        Catch ex As Exception
+    '            MsgBox("Error al eliminar al estudiante: " & ex.Message)
+    '        End Try
+
+    '    End Using
+    'End Sub
+
+    '*****************************************************************************************************
+
 
     '************- PROCEDIMIENTOS PARA VACIAR, HABILITAR E INHABILITAR TEXTBOX Y COMBOBOX-*****************
+
     Private Sub VaciarTodo()
         'Vaciar todos los TextBox
         For Each campo As TextBox In campos
@@ -372,6 +435,28 @@ Public Class frmCargaDatos
     End Sub
 
     '**************************************************************************************************
+
+    '*******************************- COMPORTAMIENTO DEL BOTÓN INICIO -*******************************
+    Private Sub btnInicio_Click(sender As Object, e As EventArgs) Handles btnInicio.Click
+        'Cierro el formulario actual
+        Me.Close()
+        'Abro el forulario de Inicio
+        frmAcceso.Show()
+    End Sub
+
+    Private Sub btnInicio_MouseHover(sender As Object, e As EventArgs) Handles btnInicio.MouseHover
+        ' Este evento se desencadena cuando el mouse entra en el área del botón
+        ' Cambia la imagen de fondo del botón cuando el mouse está sobre él
+        btnInicio.BackgroundImage = My.Resources.homeA_small
+    End Sub
+
+    Private Sub btnInicio_MouseLeave(sender As Object, e As EventArgs) Handles btnInicio.MouseLeave
+        ' Este evento se desencadena cuando el mouse sale del área del botón
+        ' Restaura la imagen de fondo original del botón cuando el mouse sale de él
+        btnInicio.BackgroundImage = My.Resources.homeN_small
+    End Sub
+
+    '************************************************************************
 
 
     '********************- COMPORTAMIENTO DE LOS CAMPOS PARA VALIDAR LAS ENTRADAS -********************

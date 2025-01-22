@@ -22,11 +22,12 @@ Partial Class frmAsistenciaEstu
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(frmAsistenciaEstu))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmAsistenciaEstu))
         lstVwAsis = New ListView()
         columnaFecha = New ColumnHeader()
         columnaAsis = New ColumnHeader()
         btnSalirEstu = New Button()
+        btnInicio = New Button()
         SuspendLayout()
         ' 
         ' lstVwAsis
@@ -67,6 +68,23 @@ Partial Class frmAsistenciaEstu
         btnSalirEstu.TabIndex = 9
         btnSalirEstu.UseVisualStyleBackColor = False
         ' 
+        ' btnInicio
+        ' 
+        btnInicio.Anchor = AnchorStyles.None
+        btnInicio.BackColor = Color.Transparent
+        btnInicio.BackgroundImage = My.Resources.Resources.homeN_small
+        btnInicio.BackgroundImageLayout = ImageLayout.Zoom
+        btnInicio.FlatAppearance.BorderSize = 0
+        btnInicio.FlatAppearance.MouseDownBackColor = Color.Transparent
+        btnInicio.FlatAppearance.MouseOverBackColor = Color.Transparent
+        btnInicio.FlatStyle = FlatStyle.Flat
+        btnInicio.Font = New Font("Calibri", 12F, FontStyle.Italic, GraphicsUnit.Point)
+        btnInicio.Location = New Point(12, 7)
+        btnInicio.Name = "btnInicio"
+        btnInicio.Size = New Size(38, 40)
+        btnInicio.TabIndex = 10
+        btnInicio.UseVisualStyleBackColor = False
+        ' 
         ' frmAsistenciaEstu
         ' 
         AutoScaleDimensions = New SizeF(8F, 20F)
@@ -76,6 +94,7 @@ Partial Class frmAsistenciaEstu
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
         BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(406, 569)
+        Controls.Add(btnInicio)
         Controls.Add(btnSalirEstu)
         Controls.Add(lstVwAsis)
         FormBorderStyle = FormBorderStyle.None
@@ -88,4 +107,5 @@ Partial Class frmAsistenciaEstu
     Friend WithEvents columnaFecha As ColumnHeader
     Friend WithEvents columnaAsis As ColumnHeader
     Friend WithEvents btnSalirEstu As Button
+    Friend WithEvents btnInicio As Button
 End Class

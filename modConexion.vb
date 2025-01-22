@@ -4,5 +4,5 @@
     ' del archivo.
     ' El nivel de acceso se define en PUBLIC para que pueda ser llamado desde cualquier parte del proyecto.
 
-    Public Const cadenaConexion As String = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source= C:\Users\Aníbal\Desktop\ControlAsistencias-Dic2024\Base de Datos\BaseDatosAsistencias.accdb"
+    Public Const cadenaConexion As String = "Provider=Microsoft.ACE.OLEDB.16.0;Data Source= E:\ISES\ControlAsistencias-main\Base de Datos\BaseDatosAsistencias.accdb"
 End Module
